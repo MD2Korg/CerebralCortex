@@ -1,0 +1,150 @@
+version: '3'
+
+services:
+# Frontend web proxy for accessing services and providing TLS encryption
+  nginx:
+    build: ./nginx
+    container_name: cerebralcortex-nginx
+    restart: always
+    volumes:
+      - ./nginx/site:/var/www
+      - ./nginx/nginx-selfsigned.crt:/etc/ssh/certs/ssl-cert.crt
+      - ./nginx/nginx-selfsigned.key:/etc/ssh/certs/ssl-cert.key
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - grafana
+      # - apiserver
+      - minio
+      - jupyter
+
+  # apiserver:
+  #   build:
+  #     context: https://github.com/MD2Korg/CerebralCortex-APIServer.git
+  #   container_name: cerebralcortex-apiserver
+  #   restart: always
+  #   expose:
+  #     - 80
+  #   depends_on:
+  #     - mysql
+  #     - kafka
+  #   environment:
+  #     - MINIO_HOST=${MINIO_HOST:-minio}
+  #     - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
+  #     - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+  #     - MYSQL_HOST=${MYSQL:-mysql}
+  #     - MYSQL_DB_USER=${MYSQL_ROOT_USER:-root}
+  #     - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-pass}
+  #     - KAFKA_HOST=${KAFKA_HOST:-kafka}
+  #     - JWT_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+  #   volumes:
+  #     - ./mount_points/apiserver:/data
+  #     - ./cc_config_file:/cc_config_file
+  #     - ./merebrum_config:/merebrum_config
+
+# Data vizualizations
+  grafana:
+    image: "grafana/grafana"
+    container_name: cerebralcortex-grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - influxdb
+    environment:
+      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
+      # - GF_INSTALL_PLUGINS=raintank-worldping-app,grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - ./mount_points/grafana/data:/var/lib/grafana
+      # - ./mount_points/grafana/home:/usr/share/grafana
+      - ./mount_points/grafana/logs:/var/log/grafana
+      - ./mount_points/grafana/plugins:/var/lib/grafana/plugins
+      # - ./mount_points/grafana/provisioning:/etc/grafana/provisioning
+
+  influxdb:
+    image: "influxdb:alpine"
+    container_name: cerebralcortex-influxdb
+    restart: always
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./mount_points/influxdb:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB="cerebralcortex_raw"
+
+# Data Science Dashboard Interface
+  jupyter:
+    build: "./jupyterhub"
+    container_name: cerebralcortex-jupyterhub
+    ports:
+      - 8000
+    restart: always
+    environment:
+      TINI_SUBREAPER: 'true'
+    volumes:
+      - ./jupyterhub/conf:/srv/jupyterhub/conf
+      - ./cc_config_file:/home/md2k/cc_config_file
+      # - ./cc_demo:/home/md2k/cc_demo
+      # - ./mount_points/data:/home/vagrant/processed_data/
+    command: jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py
+
+
+
+#Cerebral Cortex backend
+  kafka:
+    image: wurstmeister/kafka:2.11-2.0.0
+    container_name: cerebralcortex-kafka
+    restart: always
+    ports:
+      - "9092:9092"
+    environment:
+      # KAFKA_ADVERTISED_HOST_NAME: ${MACHINE_IP:-0.0.0.0}
+      HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # KAFKA_MESSAGE_MAX_BYTES: 2000000
+      KAFKA_CREATE_TOPICS: "hdfs_filequeue:8:1"
+      # KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./mount_points/kafka:/kafka
+    depends_on:
+      - zookeeper
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: cerebralcortex-zookeeper
+    restart: always
+    ports:
+      - "2181:2181"
+
+  mysql:
+    image: "mysql:5.7"
+    container_name: cerebralcortex-mysql
+    restart: always
+    labels:
+        org.md2k.cerebralcortex.name: "MySql"
+    ports:
+      - 3306:3306 # Default mysql port
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-pass}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-cerebralcortex}
+      - MYSQL_USER=${MYSQL_USER:-cerebralcortex}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-cerebralcortex_pass}
+    volumes:
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mount_points/mysql:/var/lib/mysql
+
+  minio:
+    image: "minio/minio"
+    container_name: cerebralcortex-minio
+    restart: always
+    ports:
+      - 9000:9000 # Default minio port
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+    command: server /export
+    volumes:
+      - ./minio:/export
