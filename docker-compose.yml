@@ -104,7 +104,7 @@ services:
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       # KAFKA_MESSAGE_MAX_BYTES: 2000000
-      KAFKA_CREATE_TOPICS: "hdfs_filequeue:8:1"
+      KAFKA_CREATE_TOPICS: "filequeue:8:1"
       # KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

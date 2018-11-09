@@ -1,0 +1,18 @@
+#########################################################################
+################ CerebralCortex API SERVER Config #######################
+#########################################################################
+
+# Path of a directory where all the mCerebrum uploaded files will be stored before processing
+data_dir: "/home/ali/IdeaProjects/MD2K_DATA/CC_APISERVER_DATA/"
+
+apiserver:
+  host: 0.0.0.0
+  port: 8088
+  secret_key: 'super-secret'
+  token_expire_time: 40000 #seconds
+  debug: True
+
+routes: # Don't change if you don't know what you are doing
+  auth: "auth"
+  stream: "stream"
+  object: "object"

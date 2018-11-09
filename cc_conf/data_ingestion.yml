@@ -1,0 +1,37 @@
+#########################################################################################
+############################ Ingestion Configs ##########################################
+#########################################################################################
+
+data_ingestion:
+  # Data ingestion source type. Whether data information (file names) will be fetched from MySQL or kafka messaging queue. Acceptable parameters are mysql or kafka only.
+  type: "kafka"
+  # directory path where all the raw data files are stored
+  data_dir_path: "/home/ali/IdeaProjects/MD2K_DATA/CC_APISERVER_DATA/"
+  # Ingest data in influxdb for visualization?
+  influxdb_in: False
+  # ingest data in nosql storage store?
+  nosql_in: True
+
+# Set batch size if mysql INGESTION TYPE is selected
+# Number of MySQL row a batch shall process. One MySQL row contains all .gz files paths of one day worth of data of a stream.
+mysql_batch_size: "300"
+
+# Set only when kafka INGESTION TYPE is selected.
+# how often CC-kafka shall check for new messages (in seconds)
+ping_kafka: 5
+
+
+#########################################################################################
+# black listed streams' list. Black listed streams will not be ingested in NoSQL storage
+#########################################################################################
+
+influxdb_blacklist:
+  ibl1: "ACCELEROMETER--org.md2k.motionsense--MOTION_SENSE_HRV--LEFT_WRIST"
+  ibl2: "GYROSCOPE--org.md2k.motionsense--MOTION_SENSE_HRV--RIGHT_WRIST"
+
+# This will work only when data_ingestion type=mysql
+nosql_blacklist:
+  regzex:
+    re1: '^xxxBEACON--org.md2k.beacon--BEACON--([0-9A-F]+:){5}[0-9A-F]+$' # mysql supported regex only
+  txt_match:
+    tm1: 'xxxRAW--org.md2k.%' #partial string matching, multiple are allowed
