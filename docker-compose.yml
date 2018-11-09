@@ -52,6 +52,7 @@ services:
       - "3000:3000"
     depends_on:
       - influxdb
+    user: "0"
     environment:
       - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
       # - GF_INSTALL_PLUGINS=raintank-worldping-app,grafana-clock-panel,grafana-simple-json-datasource
@@ -59,7 +60,7 @@ services:
       - ./mount_points/grafana/data:/var/lib/grafana
       # - ./mount_points/grafana/home:/usr/share/grafana
       - ./mount_points/grafana/logs:/var/log/grafana
-      - ./mount_points/grafana/plugins:/var/lib/grafana/plugins
+      # - ./mount_points/grafana/plugins:/var/lib/grafana/plugins
       # - ./mount_points/grafana/provisioning:/etc/grafana/provisioning
 
   influxdb:
