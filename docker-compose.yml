@@ -19,29 +19,29 @@ services:
       - minio
       - jupyter
 
-  # apiserver:
-  #   build:
-  #     context: https://github.com/MD2Korg/CerebralCortex-APIServer.git
-  #   container_name: cerebralcortex-apiserver
-  #   restart: always
-  #   expose:
-  #     - 80
-  #   depends_on:
-  #     - mysql
-  #     - kafka
-  #   environment:
-  #     - MINIO_HOST=${MINIO_HOST:-minio}
-  #     - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
-  #     - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
-  #     - MYSQL_HOST=${MYSQL:-mysql}
-  #     - MYSQL_DB_USER=${MYSQL_ROOT_USER:-root}
-  #     - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-pass}
-  #     - KAFKA_HOST=${KAFKA_HOST:-kafka}
-  #     - JWT_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
-  #   volumes:
-  #     - ./mount_points/apiserver:/data
-  #     - ./cc_config_file:/cc_config_file
-  #     - ./merebrum_config:/merebrum_config
+  apiserver:
+    build:
+      context: https://github.com/MD2Korg/CerebralCortex-APIServer.git
+    container_name: cerebralcortex-apiserver
+    restart: always
+    expose:
+      - 80
+    depends_on:
+      - mysql
+      - kafka
+    environment:
+      - MINIO_HOST=${MINIO_HOST:-minio}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+      - MYSQL_HOST=${MYSQL:-mysql}
+      - MYSQL_DB_USER=${MYSQL_ROOT_USER:-root}
+      - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-pass}
+      - KAFKA_HOST=${KAFKA_HOST:-kafka}
+      - JWT_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+    volumes:
+      - ./mount_points/apiserver:/data
+      - ./cc_conf:/config_dir
+      - ./merebrum_config:/merebrum_config
 
 # Data vizualizations
   grafana:
@@ -85,7 +85,7 @@ services:
       TINI_SUBREAPER: 'true'
     volumes:
       - ./jupyterhub/conf:/srv/jupyterhub/conf
-      - ./cc_config_file:/home/md2k/cc_config_file
+      - ./cc_conf:/home/md2k/cc_conf
       # - ./cc_demo:/home/md2k/cc_demo
       # - ./mount_points/data:/home/vagrant/processed_data/
     command: jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py
