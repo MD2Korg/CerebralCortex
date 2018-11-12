@@ -46,9 +46,8 @@ ENV PYSPARK_PYTHON /opt/conda/bin/python3
 ENV PATH        $JAVA_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH
 
 # Install Cerebral Cortex libraries for use in the notebook environment
-RUN git clone https://github.com/MD2Korg/CerebralCortex -b 2.2.2 \
+RUN git clone https://github.com/MD2Korg/CerebralCortex -b 2.3.0 \
     && cd CerebralCortex \
-    && sed -i '/cassandra-driver==3.12.0/d' requirements.txt  \
     && python3 setup.py install \
     && cd .. && rm -rf CerebralCortex
 
