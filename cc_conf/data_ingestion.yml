@@ -6,7 +6,7 @@ data_ingestion:
   # Data ingestion source type. Whether data information (file names) will be fetched from MySQL or kafka messaging queue. Acceptable parameters are mysql or kafka only.
   type: "kafka"
   # directory path where all the raw data files are stored
-  data_dir_path: "/home/ali/IdeaProjects/MD2K_DATA/CC_APISERVER_DATA/"
+  data_dir_path: "/data/"
   # Ingest data in influxdb for visualization?
   influxdb_in: False
   # ingest data in nosql storage store?

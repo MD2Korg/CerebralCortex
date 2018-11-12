@@ -11,7 +11,7 @@ cc:
 nosql_storage: filesystem
 
 filesystem:
-  filesystem_path: "/home/ali/cc_data/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
+  filesystem_path: "/data/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
 
 #hdfs:
 #  host: 127.0.0.1
@@ -34,7 +34,7 @@ filesystem:
 relational_storage: mysql
 
 mysql:
-  host: 127.0.0.1
+  host: mysql
   port: 3306
   connection_pool_name: "CC_Pool"
   connection_pool_size: 1
