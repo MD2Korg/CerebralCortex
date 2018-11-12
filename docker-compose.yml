@@ -19,6 +19,16 @@ services:
       - minio
       - jupyter
 
+  dataingestion:
+    build:
+      context: ../CerebralCortex-DataIngestion
+    container_name: cerebralcortex-DataIngestion
+    restart: always
+    volumes:
+      - ./mount_points/apiserver:/data
+      - ./cc_conf:/cc_conf
+
+
   apiserver:
     build:
       context: https://github.com/MD2Korg/CerebralCortex-APIServer.git
