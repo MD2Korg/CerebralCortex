@@ -3,7 +3,7 @@
 #########################################################################
 
 # Path of a directory where all the mCerebrum uploaded files will be stored before processing
-data_dir: "/home/ali/IdeaProjects/MD2K_DATA/CC_APISERVER_DATA/"
+data_dir: "/data/"
 
 apiserver:
   host: 0.0.0.0
