@@ -40,7 +40,7 @@ services:
       - JWT_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
     volumes:
       - ./mount_points/apiserver:/data
-      - ./cc_conf:/config_dir
+      - ./cc_conf:/cc_conf
       - ./merebrum_config:/merebrum_config
 
 # Data vizualizations
