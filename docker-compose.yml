@@ -97,6 +97,7 @@ services:
     volumes:
       - ./jupyterhub/conf:/srv/jupyterhub/conf
       - ./cc_conf:/home/md2k/cc_conf
+      - ./mount_points/cc_data:/cc_data
       # - ./cc_demo:/home/md2k/cc_demo
       # - ./mount_points/data:/home/vagrant/processed_data/
     command: jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py
