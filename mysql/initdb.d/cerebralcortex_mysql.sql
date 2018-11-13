@@ -38,25 +38,6 @@ CREATE TABLE `data_replay` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `data_replay_md2k2`
---
-
-DROP TABLE IF EXISTS `data_replay_md2k2`;
-CREATE TABLE `data_replay_md2k2` (
-  `id` int(20) NOT NULL,
-  `owner_id` varchar(40) NOT NULL,
-  `stream_id` varchar(256) NOT NULL,
-  `stream_name` varchar(255) NOT NULL,
-  `day` varchar(12) NOT NULL,
-  `files_list` json NOT NULL,
-  `dir_size` int(10) NOT NULL,
-  `metadata` json NOT NULL,
-  `processed` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `kafka_offsets`
 --
 
@@ -125,9 +106,9 @@ CREATE TABLE `cc_cache` (
 --
 -- Dumping data for table `user`
 --
-
+-- md2k's password is md2k
 INSERT INTO `user` (`identifier`, `username`, `password`, `token`, `token_issued`, `token_expiry`, `user_role`, `user_metadata`, `active`, `confirmed_at`, `tmp_id`) VALUES
-('636fcc1f-8966-4e63-a9df-0cbaa6e9296c', 'string', '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8', NULL, '2017-09-28 23:08:29', '2017-09-28 23:08:29', 'demo', '{"study_name": "demo"}', 1, NULL, 1);
+('636fcc1f-8966-4e63-a9df-0cbaa6e9296c', 'md2k', '95381c2877d71e5a9f06134b92e8faedef9aebf345afde752b34edab9c840ced', NULL, '2017-09-28 23:08:29', '2017-09-28 23:08:29', 'demo', '{"study_name": "demo"}', 1, NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -137,13 +118,6 @@ INSERT INTO `user` (`identifier`, `username`, `password`, `token`, `token_issued
 -- Indexes for table `data_replay`
 --
 ALTER TABLE `data_replay`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
-
---
--- Indexes for table `data_replay_md2k2`
---
-ALTER TABLE `data_replay_md2k2`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
 
@@ -180,11 +154,6 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `data_replay`
 --
 ALTER TABLE `data_replay`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `data_replay_md2k2`
---
-ALTER TABLE `data_replay_md2k2`
   MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `kafka_offsets`

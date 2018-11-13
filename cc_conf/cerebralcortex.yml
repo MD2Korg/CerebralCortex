@@ -51,14 +51,14 @@ mysql:
 #########################################################################
 ###################### Visualization Data Storage #######################
 #########################################################################
-visualization_storage: none
+visualization_storage: influxdb
 
-#influxdb:
-#  host: influxdb
-#  port: 8086
-#  database: cerebralcortex_raw
-#  db_user: ""
-#  db_pass: ""
+influxdb:
+ host: influxdb
+ port: 8086
+ database: cerebralcortex_raw
+ db_user: ""
+ db_pass: ""
 
 #########################################################################
 ########################### Messaging Service ###########################

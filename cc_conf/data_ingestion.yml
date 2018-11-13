@@ -8,7 +8,7 @@ data_ingestion:
   # directory path where all the raw data files are stored
   data_dir_path: "/data/"
   # Ingest data in influxdb for visualization?
-  influxdb_in: False
+  influxdb_in: True
   # ingest data in nosql storage store?
   nosql_in: True
 
@@ -18,7 +18,7 @@ mysql_batch_size: "300"
 
 # Set only when kafka INGESTION TYPE is selected.
 # how often CC-kafka shall check for new messages (in seconds)
-ping_kafka: 5
+ping_kafka: 30
 
 
 #########################################################################################
