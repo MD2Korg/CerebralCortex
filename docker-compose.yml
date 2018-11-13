@@ -32,7 +32,7 @@ services:
 
 
   apiserver:
-    image: md2korg/cerebralcortex-apiserver:2.3.0
+    image: md2korg/cerebralcortex-apiserver
     container_name: cerebralcortex-apiserver
     restart: always
     expose:
