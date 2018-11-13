@@ -11,7 +11,7 @@ cc:
 nosql_storage: filesystem
 
 filesystem:
-  filesystem_path: "/data/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
+  filesystem_path: "/cc_data/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
 
 #hdfs:
 #  host: 127.0.0.1

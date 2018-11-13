@@ -26,6 +26,7 @@ services:
     restart: always
     volumes:
       - ./mount_points/apiserver:/data
+      - ./mount_points/cc_data:/cc_data
       - ./cc_conf:/cc_conf
 
 
