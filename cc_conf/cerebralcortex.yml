@@ -18,8 +18,23 @@ filesystem:
 #  port: 9001
 #  raw_files_dir: "/cerebralcortex/data/"
 #
-minio: # AWS-S3  - This API is also used for AWS-S3 storage. Please specify minio as nosql_storage if you want to use AWS-S3.
-  host: minio # for amazon pass s3.amazonaws.com and for minio simpley pass url of minio server
+
+#s3:# AWS-S3  - This API is also used for AWS-S3 storage. Please specify minio as nosql_storage if you want to use AWS-S3.
+  # host: minio # for amazon pass s3.amazonaws.com and for minio simpley pass url of minio server
+  # port: 9000
+  # access_key: 'ZngmrLWgbSfZUvgocyeH'
+  # secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
+  # input_bucket_name: 'cerebralcortex-mperf' # required for aws-s3
+  # output_bucket_name: 'cerebralcortex-mperf-output' # required for aws-s3
+  # dir_prefix: 'cerebralcortex/data/'
+  # secure: False #ssl
+
+
+#########################################################################
+###################### Object Storage ###################################
+#########################################################################
+minio:
+  host: minio 
   port: 9000
   access_key: 'ZngmrLWgbSfZUvgocyeH'
   secret_key: 'IwUnI5w0f5Hf1v2qVwcr'

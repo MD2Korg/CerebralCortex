@@ -1,64 +1,272 @@
-# CerebralCortex-DockerCompose
+# Cerebral Cortex Cloud Platform
+This repository is allows you to install and evaluate the Cerebral Cortex platform.
 
-Cerebral Cortex is the big data cloud companion of mCerebrum designed to support population-scale data analysis, visualization, model development, and intervention design for mobile sensor data.
+### Releases
+* **2018.11.16** Cerebral Cortex Cloud Platform
+  - Grafana visualization support
+  - Jupyter Notebook analysis platform
+  - [Cerebral Cortex 2.3.0](https://github.com/MD2Korg/CerebralCortex/tree/2.3.0)
+  - File system based storage architecture
+  - Ability to collect data from [mCerebrum](https://md2k.org/mc2015) app
 
-Start using Cerebral Cortex with Docker
+# Disclaimer
+This software is intended for informational and demonstration purposes only and is not designed to diagnose, treat, cure, prevent, or track disease or health states. No content provided in this software is intended to serve as a substitute for any kind of professional (e.g., medical) advice.
 
-You can find more information about MD2K software on our [software website](https://md2k.org/software) or the MD2K organization on our [MD2K website](https://md2k.org/).
+# Installation Instructions
+The Cerebral Cortex platform can installed and tested on any of the three major platforms: Linux, Mac OS X, and Windows.  The following instructions will walk you through installing the dependencies necessary to run Cerebral Cortex.  The Vagrant image is 3 GB and will take approximately 5 minutes to download on a 100 Mbit/second internet connection.
 
-## Install
-#### Setup environment
-Minimum requirements:
-* Any Debian Linux Distro (We have tested it on Centos, Linux Mint, KDE, and Ubuntu)
+## Linux: (Ubuntu 18.04)
+These steps are performed from the command line and do not need a graphical interface.
 
-#### Clone and configure CerebralCortex-DataAnalysis
-* clone https://github.com/MD2Korg/CerebralCortex-DockerCompose.git
-* Execute following commands to run/setup environment:
-    * `cd CerebralCortex-DockerCompose`
-    * `docker-compose create`
-    * `docker-compose up -d`
-* Once the system is up and running, you would need to manually run influxdb commands inside the contains.
-    * `docker-compose exec influxdb influx (command to connect to influxdb container)`
-    * Please copy and run [influxdb init setup](https://github.com/MD2Korg/CerebralCortex-DockerCompose/blob/master/influxdb/init.txt)
-* Note: please modify [docker-compose-yaml](https://github.com/MD2Korg/CerebralCortex-DockerCompose/blob/master/docker-compose.yml) to change ports and other settings.
+1. [Install Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+  ```bash
+  sudo apt-get update
 
-## Contributing
-Please read our [Contributing Guidelines](https://md2k.org/contributing/contributing-guidelines.html) for details on the process for submitting pull requests to us.
+  sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
 
-We use the [Python PEP 8 Style Guide](https://www.python.org/dev/peps/pep-0008/).
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-Our [Code of Conduct](https://md2k.org/contributing/code-of-conduct.html) is the [Contributor Covenant](https://www.contributor-covenant.org/).
+  sudo add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable"
 
-Bug reports can be submitted through [JIRA](https://md2korg.atlassian.net/secure/Dashboard.jspa).
+  sudo apt-get update
+  sudo apt-get install docker-ce
+  ```
 
-Our discussion forum can be found [here](https://discuss.md2k.org/).
+2. [Install docker-compose](https://docs.docker.com/compose/install)
 
-## Versioning
+  ```bash
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-We use [Semantic Versioning](https://semver.org/) for versioning the software which is based on the following guidelines.
+  sudo chmod +x /usr/local/bin/docker-compose
+  ```
+  Please consult the [Docker](https://docker.com) site if you face any installation errors for step 1 and 2.
 
-MAJOR.MINOR.PATCH (example: 3.0.12)
+3. Clone this CerebralCortex-Platform repository.
+  ```bash
+  git clone https://github.com/MD2KOrg/CerebralCortex-Personal
+  cd CerebralCortex-Vagrant
+  vagrant up
+  ```
 
-  1. MAJOR version when incompatible API changes are made,
-  2. MINOR version when functionality is added in a backwards-compatible manner, and
-  3. PATCH version when backwards-compatible bug fixes are introduced.
+<!-- ## Mac OS X:
+These steps are performed from the command line (Terminal) with the support of [Homebrew](https://brew.sh/) and do not need a graphical interface.
 
-For the versions available, see [this repository's tags](https://github.com/MD2Korg/CerebralCortex-DockerCompose/tags).
+1. Install VirtualBox and Vagrant
+  ```bash
+  brew cask install virtualbox
+  brew cask install vagrant
+  ```
 
-## Contributors
+2. Install the docker-compose plugin for Vagrant
+  ```bash
+  vagrant plugin install vagrant-docker-compose
+  vagrant plugin install vagrant-vbguest
+  ```
+  Please consult [Vagrant Documentation](https://www.vagrantup.com/docs/)  if you face any installation errors for step 1 and 2.
 
-Link to the [list of contributors](https://github.com/MD2Korg/CerebralCortex-DockerCompose/graphs/contributors) who participated in this project.
+3. Download or clone this CerebralCortex-Vagrant repository.
+  ```bash
+  git clone https://github.com/MD2KOrg/CerebralCortex-Vagrant
+  cd CerebralCortex-Platform
+  docker-compose up
+  ``` -->
 
-## License
+<!-- ## Windows 7+:
 
-This project is licensed under the BSD 2-Clause - see the [license](https://md2k.org/software-under-the-hood/software-uth-license) file for details.
+1. Install VirtualBox and Vagrant
+  - Download and install the Windows binary for VirtualBox: https://www.virtualbox.org/wiki/Downloads (under the VirtualBox platform packages list, select the link for Windows hosts)
 
-## Acknowledgments
+  - Download and install the Windows binary for Vagrant: https://www.vagrantup.com/downloads.html
 
-* [National Institutes of Health](https://www.nih.gov/) - [Big Data to Knowledge Initiative](https://datascience.nih.gov/bd2k)
-  * Grants: R01MD010362, 1UG1DA04030901, 1U54EB020404, 1R01CA190329, 1R01DE02524, R00MD010468, 3UH2DA041713, 10555SC
-* [National Science Foundation](https://www.nsf.gov/)
-  * Grants: 1640813, 1722646
-* [Intelligence Advanced Research Projects Activity](https://www.iarpa.gov/)
-  * Contract: 2017-17042800006
-
+  Please consult [Vagrant Documentation](https://www.vagrantup.com/docs/)  if you face any installation errors for step 1.
+
+2. Download the CerebralCortex-Vagrant repository.  
+    Download location: https://github.com/MD2Korg/CerebralCortex-Vagrant/archive/personal.zip
+
+3. Extract the `CerebralCortex-Vagrant-personal.zip` file and open it in `Explorer`
+
+4. Double click on the `cerebralcortex_initialize.cmd` file which will launch a command window and begin the installation of the Cerebral Cortex platform. This installation will take some time.
+
+5. When installation is complete, double-click on `cerebralcortex_console.cmd` (found in the CerebralCortex-Vagrant-personal folder). You will need to run all subsequent commands in the resulting command prompt window. -->
+
+## Launch Cerebral Cortex
+Open the following link to view the Cerebral Cortex launch page: http://localhost/
+
+
+## Optional: Steps to Explore Underlying Services
+
+Use the commands below to confirm that everything is installed and working correctly. Docker-Compose commands can be used to interact with Cerebral Cortex's containers. The following commands lists the the status of all the services used by CerebralCortex.  
+
+Note for anyone who may be less familiar with command prompts: Enter the commands shown below into the command prompt window one by one, pressing Enter after each entry. The ```vagrant ssh``` commands does not need to be input for each block.  It is sufficient to enter it once in most circumstances.
+
+```bash
+vagrant ssh
+cd CerebralCortex-DockerCompose/
+docker-compose ps
+```
+
+The above commands display the status of all the services as such as the example shown below.
+```
+      Name                    Command               State                    Ports                   
+ ---------------------------------------------------------------------------------------------------
+ md2k-api-server   /entrypoint.sh /start.sh         Up      443/tcp, 80/tcp                          
+ md2k-grafana      /run.sh                          Up      0.0.0.0:3000->3000/tcp                   
+ md2k-influxdb     /entrypoint.sh influxd           Up      0.0.0.0:8086->8086/tcp                   
+ md2k-jupyterhub   jupyterhub --no-ssl --conf ...   Up      0.0.0.0:32771->8000/tcp                  
+ md2k-minio        /usr/bin/docker-entrypoint ...   Up      0.0.0.0:9000->9000/tcp                   
+ md2k-mysql        docker-entrypoint.sh mysqld      Up      0.0.0.0:3306->3306/tcp                   
+ md2k-nginx        nginx -g daemon off;             Up      0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp
+```
+
+
+#### Import and analyze the data
+Data can now be processed, which can take some time due to the CPU intensive nature of computing all the features and markers.
+
+  ```bash
+  vagrant ssh
+  ./ingest_and_analyze.sh
+  ```
+**Note: Exceptions and Warnings are to be expected during the data ingestion and analyzing phase**
+
+A large number of console logs will appear on the screen indicating what the system is currently doing.  It will first preprocess the data files you copied from the mCerebrum app into a format that Cerebral Cortex will ingest.  Next, the ingestion pipeline will scan and import this data into Cerebral Cortex's internal data stores.  Finally, it will run a pre-specified set of feature computations based on the smartphone sensors streams.
+
+
+# Visualizing and Analyzing Your Data
+Cerebral Cortex provides two mechanisms to visualize and analyze your data.  First, a user-centric interface is provided by the [Grafana](https://grafana.com/) project which can be utilized to plot and explore Cerebral Cortex data streams.  Second, a code-centric interface is provided by the [Jupyter](http://jupyter.org/) project and allows a user to write Python3 code to interact with the Cerebral Cortex kernel.
+
+## Visualization of data with Grafana
+Open this link in your web browser http://localhost/grafana/login to visualize your data.  
+
+1. The default login and password are both `admin`.  
+
+  ![Grafana](imgs/grafana.png)
+
+
+2. Once you authenticate, you will see the following screen.
+
+  ![Grafana Main](imgs/grafana-main.png)
+
+
+3. Select the `Home` dropdown at the top-left of the screen and choose the **MD2K_DEMO** dashboard.
+
+  ![Grafana Visualization](imgs/GrafanaLegend.png)
+
+
+This is a pre-built visualization that provides some examples of the various types of displays that are possible.  
+
+For example:
+- Data Yield of MSHRV-LED, MSHRV-Accel, AutoSenseBLE
+- Geolocation
+- Phone/SMS/Notifications
+- Phone screen touches
+
+You may [create additional dashboards](http://docs.grafana.org/guides/getting_started/) to visualize all of the raw and processed data.
+
+
+## Analyzing your data with Jupyter Notebooks
+Open this link in your web browser http://localhost/jupyterhub/hub/login to interact and analyze your data.  
+
+1. A login screen will be shown as follows.  
+
+  The username and password are both `md2k`.  The warning shown is because this site is running locally on your machine and is not secured by a security certificate.  There is no data leaving the machine and going across the internet.
+
+  ![Jupyter Hub](imgs/jupyter.png)
+
+
+2. A file browser will appear after successful authentication and you should choose the `cc_demo` folder.
+
+  ![Jupyter Files](imgs/jupyter-files.png)
+
+  ![Jupyter Demo](imgs/jupyter-demo.png)
+
+
+3. Click on the `CerebralCortex_Basic_Usage.ipynb` and it will open in a new tab.  This provides an overview of how to utilize Cerebral Cortex and visualize some data.
+
+  ![Jupyter Cerebral Cortex Demo](imgs/jupyter-CC-demo.png)
+
+
+This example notebook demonstrates the following:
+  - Import CerebralCortex libraries and loading configurations
+  - Get all users of a study
+  - Get all streams of a user
+  - Get days when a stream has data available
+  - Get a stream's raw data and metadata
+  - Plot stream raw data
+
+
+### Creating your own scripts
+
+  1. Authenticate with user credentials
+  2. Click on Files tab
+  3. Click on new and select `pySpark (Spark 2.2.0) (Python 3)` to create a new Python script.
+
+
+## Computing features
+The [CerebralCortex-DataAnalysis](https://github.com/MD2Korg/CerebralCortex-DataAnalysis) repository is available within the Vagrant virtual machine and is accessible through the Jupyter interface.  This repository contains the code to compute features on the data. These features are located in the `core/feature` directory.
+
+The following features have been validated by our team and are considered stable with the remaining features still
+under development. Please have a look at the documentation for each of the above features to get more insight into their functionality. Sensors/features in parentheses should be considered dependencies to compute the specified feature.
+
+#### Stable Features
+  * phone_features (Smartphone)
+  * phone_screen_touch_features (Smartphone)
+  * gpsfeature (Smartphone, gps, gps_daily)
+  * puffMarker (MotionSenseHRV)
+  * rr_interval (MotionSenseHRV)
+
+#### Features Under Development
+  * activity and posture classification (MotionSenseHRV)
+  * typing features (MotionSenseHRV)
+
+
+## Deleting Cerebral Cortex
+Run following commands if anything goes wrong and/or you want to uninstall CerebralCortex vagrant image
+
+```bash
+vagrant destroy
+```
+
+## Starting and stopping Cerebral Cortex
+Stop Cerebral Cortex
+```bash
+vagrant halt
+```
+
+Suspend Cerebral Cortex
+```bash
+vagrant suspend
+```
+
+Start Cerebral Cortex
+```bash
+vagrant up
+```
+
+
+## FAQ
+
+1. **I'm stuck, where do I get help?**
+
+  Please look for more information or ask for help here: https://discuss.md2k.org/
+
+2. **How do I find out about new releases and software announcements**
+
+    Please sign up for our software announcement mailing list: md2k-software@googlegroups.com
+
+3. **System requirements**
+
+  These are the minimum recommended system requirements for running Cerebral Cortex.
+  - 2-4 core CPU
+  - 16+ GB RAM
+  - 10GB disk + enough to support the total data collection from mCerebrum
+
+4. **Errors encountered during provisioning**
+
+  Use `vagrant up --provision` to resume the installation.
