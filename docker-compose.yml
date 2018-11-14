@@ -40,6 +40,7 @@ services:
     depends_on:
       - mysql
       - kafka
+      - minio
     environment:
       - MINIO_HOST=${MINIO_HOST:-minio}
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
