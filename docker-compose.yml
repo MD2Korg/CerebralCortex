@@ -20,6 +20,7 @@ services:
       - minio
       - jupyter
 
+
   dataingestion:
     image: md2korg/cerebralcortex-dataingestion
     container_name: cerebralcortex-DataIngestion
@@ -32,7 +33,7 @@ services:
   dataanalysis:
     image: md2korg/cerebralcortex-dataanalysis
     container_name: cerebralcortex-DataAnalysis
-    restart: always
+    # restart: always
     volumes:
       - ./mount_points/cc_data:/cc_data
       - ./cc_conf:/cc_conf

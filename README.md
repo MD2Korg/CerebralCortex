@@ -110,23 +110,27 @@ docker-compose ps
 
 The above commands display the status of all the services as such as the example shown below.
 ```
-      Name                    Command               State                    Ports                   
- ---------------------------------------------------------------------------------------------------
- md2k-api-server   /entrypoint.sh /start.sh         Up      443/tcp, 80/tcp                          
- md2k-grafana      /run.sh                          Up      0.0.0.0:3000->3000/tcp                   
- md2k-influxdb     /entrypoint.sh influxd           Up      0.0.0.0:8086->8086/tcp                   
- md2k-jupyterhub   jupyterhub --no-ssl --conf ...   Up      0.0.0.0:32771->8000/tcp                  
- md2k-minio        /usr/bin/docker-entrypoint ...   Up      0.0.0.0:9000->9000/tcp                   
- md2k-mysql        docker-entrypoint.sh mysqld      Up      0.0.0.0:3306->3306/tcp                   
- md2k-nginx        nginx -g daemon off;             Up      0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp
+Name                          Command                  State                             Ports                       
+---------------------------------------------------------------------------------------------------------------------------------
+cerebralcortex-DataAnalysis    sh compute_features.sh 201 ...   Exit 0                                                           
+cerebralcortex-DataIngestion   sh run.sh                        Up                                                               
+cerebralcortex-apiserver       /entrypoint.sh /start.sh         Up             443/tcp, 80/tcp                                   
+cerebralcortex-grafana         /run.sh                          Up             0.0.0.0:3000->3000/tcp                            
+cerebralcortex-influxdb        /entrypoint.sh influxd           Up             0.0.0.0:8086->8086/tcp                            
+cerebralcortex-jupyterhub      jupyterhub --no-ssl --conf ...   Up             0.0.0.0:15024->8000/tcp                           
+cerebralcortex-kafka           start-kafka.sh                   Up             0.0.0.0:9092->9092/tcp                            
+cerebralcortex-minio           /usr/bin/docker-entrypoint ...   Up (healthy)   0.0.0.0:9000->9000/tcp                            
+cerebralcortex-mysql           docker-entrypoint.sh mysqld      Up             0.0.0.0:3306->3306/tcp, 33060/tcp                 
+cerebralcortex-nginx           nginx -g daemon off;             Up             0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp          
+cerebralcortex-zookeeper       /bin/sh -c /usr/sbin/sshd  ...   Up             0.0.0.0:2181->2181/tcp, 22/tcp, 2888/tcp, 3888/tcp
 ```
 
 
 #### Import and analyze the data
-Data is automatically imported into the system when mCerebrum is connected to the cloud platform.  You can also initiate a replay of the data in the following way.
+Data is **automatically** imported into the system when mCerebrum is connected to the cloud platform.  You can also initiate a replay of the data in the following way.
 
   ```bash
-  ???docker-compose run dataingestion
+  ???docker-compose run dataingestion sh batch_import.sh
   ```
 **Note: Exceptions and Warnings are to be expected during the data ingestion and analyzing phase**
 
@@ -204,9 +208,8 @@ This example notebook demonstrates the following:
   3. Click on new and select `pySpark (Spark 2.3.2) (Python 3)` to create a new Python script.
 
 
-## TWH: Build a container for computing features.
-<!-- ## Computing features
-The [CerebralCortex-DataAnalysis](https://github.com/MD2Korg/CerebralCortex-DataAnalysis) repository is available within the Vagrant virtual machine and is accessible through the Jupyter interface.  This repository contains the code to compute features on the data. These features are located in the `core/feature` directory.
+## Computing features
+The [CerebralCortex-DataAnalysis](https://github.com/MD2Korg/CerebralCortex-DataAnalysis) repository is available as a Docker container (cerebralcortex-dataanalysis).  This repository contains the code to compute features on the data. These features are located in the `core/feature` directory.
 
 The following features have been validated by our team and are considered stable with the remaining features still
 under development. Please have a look at the documentation for each of the above features to get more insight into their functionality. Sensors/features in parentheses should be considered dependencies to compute the specified feature.
@@ -214,13 +217,22 @@ under development. Please have a look at the documentation for each of the above
 #### Stable Features
   * phone_features (Smartphone)
   * phone_screen_touch_features (Smartphone)
-  * gpsfeature (Smartphone, gps, gps_daily)
   * puffMarker (MotionSenseHRV)
-  * rr_interval (MotionSenseHRV)
 
 #### Features Under Development
   * activity and posture classification (MotionSenseHRV)
-  * typing features (MotionSenseHRV) -->
+  * typing features (MotionSenseHRV)
+  * rr_interval (MotionSenseHRV)
+
+### Running Data Analysis
+The container can be run against any temporal subset of data within the system after you have collected and/or ingested data.  From the CerebralCortex-Platform folder run the following command.  The console will output a log of the individual modules debug messages.  Additionally, this container will launch at the initial docker-compose startup and process any data already in the system.
+
+```bash
+Format: docker-compose run dataanalysis sh compute_features.sh StartDate(YYYYMMDD) EndDate(YYYYMMDD)
+
+docker-compose run dataanalysis sh compute_features.sh 20181101 20190101
+```
+
 
 
 ## Starting and stopping Cerebral Cortex
