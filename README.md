@@ -102,7 +102,7 @@ Open the following link to view the Cerebral Cortex launch page: http://localhos
 
 ## Optional: Steps to Explore Underlying Services
 
-Use the commands below to confirm that everything is installed and working correctly. Docker-Compose commands can be used to interact with Cerebral Cortex's containers. The following commands lists the the status of all the services used by CerebralCortex.  
+Use the commands below to confirm that everything is installed and working correctly. Docker-Compose commands can be used to interact with Cerebral Cortex's containers. The following commands lists the the status of all the services used by CerebralCortex.  Most containers for Cerebral Cortex will report a (healthy) state as long as they are running.
 
 ```bash
 docker-compose ps
@@ -110,18 +110,18 @@ docker-compose ps
 
 The above commands display the status of all the services as such as the example shown below.
 ```
-Name                          Command                  State                             Ports                       
+Name                          Command                  State                             Ports
 ---------------------------------------------------------------------------------------------------------------------------------
-cerebralcortex-DataAnalysis    sh compute_features.sh 201 ...   Exit 0                                                           
-cerebralcortex-DataIngestion   sh run.sh                        Up                                                               
-cerebralcortex-apiserver       /entrypoint.sh /start.sh         Up             443/tcp, 80/tcp                                   
-cerebralcortex-grafana         /run.sh                          Up             0.0.0.0:3000->3000/tcp                            
-cerebralcortex-influxdb        /entrypoint.sh influxd           Up             0.0.0.0:8086->8086/tcp                            
-cerebralcortex-jupyterhub      jupyterhub --no-ssl --conf ...   Up             0.0.0.0:15024->8000/tcp                           
-cerebralcortex-kafka           start-kafka.sh                   Up             0.0.0.0:9092->9092/tcp                            
-cerebralcortex-minio           /usr/bin/docker-entrypoint ...   Up (healthy)   0.0.0.0:9000->9000/tcp                            
-cerebralcortex-mysql           docker-entrypoint.sh mysqld      Up             0.0.0.0:3306->3306/tcp, 33060/tcp                 
-cerebralcortex-nginx           nginx -g daemon off;             Up             0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp          
+cerebralcortex-DataAnalysis    sh compute_features.sh 201 ...   Exit 0
+cerebralcortex-DataIngestion   sh run.sh                        Up (healthy)
+cerebralcortex-apiserver       /entrypoint.sh /start.sh         Up (healthy)   443/tcp, 80/tcp
+cerebralcortex-grafana         /run.sh                          Up             0.0.0.0:3000->3000/tcp
+cerebralcortex-influxdb        /entrypoint.sh influxd           Up             0.0.0.0:8086->8086/tcp
+cerebralcortex-jupyterhub      jupyterhub --no-ssl --conf ...   Up (healthy)   0.0.0.0:15026->8000/tcp
+cerebralcortex-kafka           start-kafka.sh                   Up             0.0.0.0:9092->9092/tcp
+cerebralcortex-minio           /usr/bin/docker-entrypoint ...   Up (healthy)   0.0.0.0:9000->9000/tcp
+cerebralcortex-mysql           docker-entrypoint.sh mysqld      Up             0.0.0.0:3306->3306/tcp, 33060/tcp
+cerebralcortex-nginx           nginx -g daemon off;             Up (healthy)   0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp
 cerebralcortex-zookeeper       /bin/sh -c /usr/sbin/sshd  ...   Up             0.0.0.0:2181->2181/tcp, 22/tcp, 2888/tcp, 3888/tcp
 ```
 
@@ -153,7 +153,7 @@ Open this link in your web browser http://localhost/grafana/login to visualize y
   ![Grafana Main](imgs/grafana-main.png)
 
 
-3. Select the `Home` dropdown at the top-left of the screen and choose the **MD2K_DEMO** dashboard.
+3. Select the `Home` dropdown at the top-left of the screen and choose the **MD2K** dashboard.
 
   ![Grafana Visualization](imgs/GrafanaLegend.png)
 
@@ -161,11 +161,13 @@ Open this link in your web browser http://localhost/grafana/login to visualize y
 This is a pre-built visualization that provides some examples of the various types of displays that are possible.  
 
 For example:
-TWH UPDATE
-- Data Yield of MSHRV-LED, MSHRV-Accel, AutoSenseBLE
-- Geolocation
-- Phone/SMS/Notifications
-- Phone screen touches
+- Smartphone Accelerometer/Gyrometers/Magentometer
+- Battery levels of connected devices
+- Step count as determined from the smartphone
+<!-- - Data Yield of MSHRV-LED, MSHRV-Accel, AutoSenseBLE -->
+<!-- - Geolocation -->
+<!-- - Phone/SMS/Notifications -->
+<!-- - Phone screen touches -->
 
 You may [create additional dashboards](http://docs.grafana.org/guides/getting_started/) to visualize all of the raw and processed data.
 
