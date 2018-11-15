@@ -2,7 +2,7 @@ FROM nginx
 MAINTAINER Timothy Hnat twhnat@memphis.edu
 
 RUN apt-get update && \
-    apt-get install curl && \
+    apt-get install -y curl && \
     rm -rf /var/lib/apt/lists/*
 
 COPY nginx.conf /etc/nginx/nginx.conf
