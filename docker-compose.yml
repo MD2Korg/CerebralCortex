@@ -93,7 +93,7 @@ services:
     environment:
       TINI_SUBREAPER: 'true'
     volumes:
-      - ./jupyterhub/conf:/srv/jupyterhub/conf
+      - ./jupyter/conf:/srv/jupyterhub/conf
       - ./cc_conf:/home/md2k/cc_conf
       - ./mount_points/cc_data:/cc_data
       - ./jupyter:/home/md2k/demo
