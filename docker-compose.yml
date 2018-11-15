@@ -30,9 +30,7 @@ services:
       - ./cc_conf:/cc_conf
 
   dataanalysis:
-    # image: md2korg/cerebralcortex-dataingestion
-    build:
-      context: ../CerebralCortex-DataAnalysis
+    image: md2korg/cerebralcortex-dataanalysis
     container_name: cerebralcortex-DataAnalysis
     restart: always
     volumes:
