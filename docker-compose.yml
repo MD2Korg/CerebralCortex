@@ -21,8 +21,7 @@ services:
       - jupyter
 
   dataingestion:
-    build:
-      context: ../CerebralCortex-DataIngestion
+    image: md2korg/cerebralcortex-dataingestion
     container_name: cerebralcortex-DataIngestion
     restart: always
     volumes:
