@@ -73,7 +73,7 @@ services:
       # - ./mount_points/grafana/home:/usr/share/grafana
       - ./mount_points/grafana/logs:/var/log/grafana
       # - ./mount_points/grafana/plugins:/var/lib/grafana/plugins
-      # - ./mount_points/grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana:/etc/grafana/provisioning
 
   influxdb:
     image: influxdb:alpine

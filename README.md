@@ -13,7 +13,7 @@ This repository is allows you to install and evaluate the Cerebral Cortex platfo
 This software is intended for informational and demonstration purposes only and is not designed to diagnose, treat, cure, prevent, or track disease or health states. No content provided in this software is intended to serve as a substitute for any kind of professional (e.g., medical) advice.
 
 # Installation Instructions
-The Cerebral Cortex platform can installed and tested on any of the three major platforms: Linux, Mac OS X, and Windows.  The following instructions will walk you through installing the dependencies necessary to run Cerebral Cortex.  The Vagrant image is 3 GB and will take approximately 5 minutes to download on a 100 Mbit/second internet connection.
+The Cerebral Cortex platform can installed and tested on any of the three major platforms: Linux, Mac OS X, and Windows.  The following instructions will walk you through installing the dependencies necessary to run Cerebral Cortex.  The Docker images take approximately 8 minutes to download, build, and install on a 1000 Mbit/second internet connection. We are continually working on improving the speed with which everything downloads and installs.
 
 ## Linux: (Ubuntu 18.04)
 These steps are performed from the command line and do not need a graphical interface.
@@ -104,11 +104,7 @@ Open the following link to view the Cerebral Cortex launch page: http://localhos
 
 Use the commands below to confirm that everything is installed and working correctly. Docker-Compose commands can be used to interact with Cerebral Cortex's containers. The following commands lists the the status of all the services used by CerebralCortex.  
 
-Note for anyone who may be less familiar with command prompts: Enter the commands shown below into the command prompt window one by one, pressing Enter after each entry. The ```vagrant ssh``` commands does not need to be input for each block.  It is sufficient to enter it once in most circumstances.
-
 ```bash
-vagrant ssh
-cd CerebralCortex-DockerCompose/
 docker-compose ps
 ```
 
@@ -127,19 +123,18 @@ The above commands display the status of all the services as such as the example
 
 
 #### Import and analyze the data
-Data can now be processed, which can take some time due to the CPU intensive nature of computing all the features and markers.
+Data is automatically imported into the system when mCerebrum is connected to the cloud platform.  You can also initiate a replay of the data in the following way.
 
   ```bash
-  vagrant ssh
-  ./ingest_and_analyze.sh
+  ???docker-compose run dataingestion
   ```
 **Note: Exceptions and Warnings are to be expected during the data ingestion and analyzing phase**
 
-A large number of console logs will appear on the screen indicating what the system is currently doing.  It will first preprocess the data files you copied from the mCerebrum app into a format that Cerebral Cortex will ingest.  Next, the ingestion pipeline will scan and import this data into Cerebral Cortex's internal data stores.  Finally, it will run a pre-specified set of feature computations based on the smartphone sensors streams.
+A large number of console logs will appear on the screen indicating what the system is currently doing.  It will first preprocess the data files you copied from the mCerebrum app into a format that Cerebral Cortex will ingest.  Next, the ingestion pipeline will scan and import this data into Cerebral Cortex's internal data stores.
 
 
 # Visualizing and Analyzing Your Data
-Cerebral Cortex provides two mechanisms to visualize and analyze your data.  First, a user-centric interface is provided by the [Grafana](https://grafana.com/) project which can be utilized to plot and explore Cerebral Cortex data streams.  Second, a code-centric interface is provided by the [Jupyter](http://jupyter.org/) project and allows a user to write Python3 code to interact with the Cerebral Cortex kernel.
+Cerebral Cortex provides two mechanisms to visualize and analyze your data.  First, a user-centric interface is provided by the [Grafana](https://grafana.com/) project which can be utilized to plot and explore Cerebral Cortex data streams.  Second, a code-centric interface is provided by the [Jupyter](http://jupyter.org/) project and allows a user to write Python 3 code to interact with the Cerebral Cortex kernel.
 
 ## Visualization of data with Grafana
 Open this link in your web browser http://localhost/grafana/login to visualize your data.  
@@ -162,6 +157,7 @@ Open this link in your web browser http://localhost/grafana/login to visualize y
 This is a pre-built visualization that provides some examples of the various types of displays that are possible.  
 
 For example:
+TWH UPDATE
 - Data Yield of MSHRV-LED, MSHRV-Accel, AutoSenseBLE
 - Geolocation
 - Phone/SMS/Notifications
@@ -205,10 +201,11 @@ This example notebook demonstrates the following:
 
   1. Authenticate with user credentials
   2. Click on Files tab
-  3. Click on new and select `pySpark (Spark 2.2.0) (Python 3)` to create a new Python script.
+  3. Click on new and select `pySpark (Spark 2.3.2) (Python 3)` to create a new Python script.
 
 
-## Computing features
+## TWH: Build a container for computing features.
+<!-- ## Computing features
 The [CerebralCortex-DataAnalysis](https://github.com/MD2Korg/CerebralCortex-DataAnalysis) repository is available within the Vagrant virtual machine and is accessible through the Jupyter interface.  This repository contains the code to compute features on the data. These features are located in the `core/feature` directory.
 
 The following features have been validated by our team and are considered stable with the remaining features still
@@ -223,30 +220,26 @@ under development. Please have a look at the documentation for each of the above
 
 #### Features Under Development
   * activity and posture classification (MotionSenseHRV)
-  * typing features (MotionSenseHRV)
+  * typing features (MotionSenseHRV) -->
 
-
-## Deleting Cerebral Cortex
-Run following commands if anything goes wrong and/or you want to uninstall CerebralCortex vagrant image
-
-```bash
-vagrant destroy
-```
 
 ## Starting and stopping Cerebral Cortex
 Stop Cerebral Cortex
 ```bash
-vagrant halt
-```
-
-Suspend Cerebral Cortex
-```bash
-vagrant suspend
+docker-compose down
 ```
 
 Start Cerebral Cortex
 ```bash
-vagrant up
+docker-compose up
+```
+
+Delete all data and container data for Cerebral Cortex
+```bash
+docker-compose stop
+docker-compose rm
+
+make clean
 ```
 
 
@@ -254,7 +247,7 @@ vagrant up
 
 1. **I'm stuck, where do I get help?**
 
-  Please look for more information or ask for help here: https://discuss.md2k.org/
+  Please look for more information or ask for help here: https://mhealth.md2k.org/discuss/
 
 2. **How do I find out about new releases and software announcements**
 
@@ -266,7 +259,3 @@ vagrant up
   - 2-4 core CPU
   - 16+ GB RAM
   - 10GB disk + enough to support the total data collection from mCerebrum
-
-4. **Errors encountered during provisioning**
-
-  Use `vagrant up --provision` to resume the installation.
