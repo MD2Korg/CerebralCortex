@@ -29,6 +29,17 @@ services:
       - ./mount_points/cc_data:/cc_data
       - ./cc_conf:/cc_conf
 
+  dataanalysis:
+    # image: md2korg/cerebralcortex-dataingestion
+    build:
+      context: ../CerebralCortex-DataAnalysis
+    container_name: cerebralcortex-DataAnalysis
+    restart: always
+    volumes:
+      - ./mount_points/cc_data:/cc_data
+      - ./cc_conf:/cc_conf
+
+
 
   apiserver:
     image: md2korg/cerebralcortex-apiserver
