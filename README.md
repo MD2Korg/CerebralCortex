@@ -85,11 +85,16 @@ These steps are performed from the command line and do not need a graphical inte
 
 3. Extract the `CerebralCortex-Platform.zip` file and open it in `Explorer`
 
-4. Docker-compose instructions go here
+4. Docker-compose instructions to be determined once a Windows machine can be found to test with.
 
 
 ## Launch Cerebral Cortex
 Open the following link to view the Cerebral Cortex launch page: http://localhost/
+
+
+# WARNING
+Cerebral Cortex is not configured with SSL/TLS support out of the box and should NOT be utilize to collect human subject data due to non-compliant nature of this with most/all security requirements.
+
 
 
 ## Optional: Steps to Explore Underlying Services
@@ -118,15 +123,24 @@ cerebralcortex-zookeeper       /bin/sh -c /usr/sbin/sshd  ...   Up             0
 ```
 
 
-#### Import and analyze the data (TWH: TODO)
+#### Import and analyze the data
 Data is **automatically** imported into the system when mCerebrum is connected to the cloud platform.  You can also initiate a replay of the data in the following way.
 
-  ```bash
+  <!-- ```bash
   ???docker-compose run dataingestion sh batch_import.sh
   ```
 **Note: Exceptions and Warnings are to be expected during the data ingestion and analyzing phase**
 
-A large number of console logs will appear on the screen indicating what the system is currently doing.  It will first preprocess the data files you copied from the mCerebrum app into a format that Cerebral Cortex will ingest.  Next, the ingestion pipeline will scan and import this data into Cerebral Cortex's internal data stores.
+A large number of console logs will appear on the screen indicating what the system is currently doing.  It will first preprocess the data files you copied from the mCerebrum app into a format that Cerebral Cortex will ingest.  Next, the ingestion pipeline will scan and import this data into Cerebral Cortex's internal data stores. -->
+
+# Connecting mCerebrum
+mCerebrum is our mobile application for Android that collects, processes, and transmits data to Cerebral Cortex.  It is available here: https://md2k.org/mc2015 for download and installation.  This app will let you authenticate with the default user and password `md2k:md2k` and your DNS entry for the Cerebral Cortex server.  From this point, it will automatically download the configuration file one the system and start the setup process.  The phone will upload data every 15 minutes data sources that are not raw sensor data and every hour for high-rate raw sensors.  These will be reflected in the data processing and visualization interfaces
+
+**Current limitations:**
+- The provide mCerebrum configuration `mC_Demo.zip` in the `minio/configuration` folder need to be modified to support the proper data upload URL.  Once you extract this zip file, edit the `mCerebrum/org.md2k.datakit/config.json` file and change the `upload:url` to your DNS entry for Cerebral Cortex.  Recompress the mCerebrum folder and overwrite the current zip file.
+- If mCerebrum does not properly connect to your provided DNS host running Cerebral Cortex, you MUST **force stop** the app on the phone before relaunching and logging into Cerebral Cortex.  
+
+Both of these bugs are logged in the tracking system and we will fix them when we can but this should not prevent you from testing out the platform.
 
 
 # Visualizing and Analyzing Your Data
