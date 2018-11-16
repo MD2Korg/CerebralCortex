@@ -81,7 +81,7 @@ These steps are performed from the command line and do not need a graphical inte
 1. [Install Docker](https://docs.docker.com/docker-for-windows/install/)
 
 2. Download the CerebralCortex-Platform repository.  
-    Download location: https://github.com/MD2Korg/CerebralCortex-Platform/archive/master.zip
+    Download location: [https://github.com/MD2Korg/CerebralCortex-Platform/archive/master.zip](https://github.com/MD2Korg/CerebralCortex-Platform/archive/master.zip)
 
 3. Extract the `CerebralCortex-Platform.zip` file and open it in `Explorer`
 
