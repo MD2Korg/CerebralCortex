@@ -48,53 +48,45 @@ These steps are performed from the command line and do not need a graphical inte
   ```
   Please consult the [Docker](https://docker.com) site if you face any installation errors for step 1 and 2.
 
-3. Clone this CerebralCortex-Platform repository.
+3. Download or clone this CerebralCortex-Platform repository.
   ```bash
-  git clone https://github.com/MD2KOrg/CerebralCortex-Personal
-  cd CerebralCortex-Vagrant
-  vagrant up
-  ```
-
-<!-- ## Mac OS X:
-These steps are performed from the command line (Terminal) with the support of [Homebrew](https://brew.sh/) and do not need a graphical interface.
-
-1. Install VirtualBox and Vagrant
-  ```bash
-  brew cask install virtualbox
-  brew cask install vagrant
-  ```
-
-2. Install the docker-compose plugin for Vagrant
-  ```bash
-  vagrant plugin install vagrant-docker-compose
-  vagrant plugin install vagrant-vbguest
-  ```
-  Please consult [Vagrant Documentation](https://www.vagrantup.com/docs/)  if you face any installation errors for step 1 and 2.
-
-3. Download or clone this CerebralCortex-Vagrant repository.
-  ```bash
-  git clone https://github.com/MD2KOrg/CerebralCortex-Vagrant
+  git clone https://github.com/MD2KOrg/CerebralCortex-Platform
   cd CerebralCortex-Platform
   docker-compose up
-  ``` -->
+  ```
 
-<!-- ## Windows 7+:
+## Mac OS X:
 
-1. Install VirtualBox and Vagrant
-  - Download and install the Windows binary for VirtualBox: https://www.virtualbox.org/wiki/Downloads (under the VirtualBox platform packages list, select the link for Windows hosts)
+1. [Install Docker](https://docs.docker.com/docker-for-mac/install/)
 
-  - Download and install the Windows binary for Vagrant: https://www.vagrantup.com/downloads.html
+2. [Install docker-compose](https://docs.docker.com/compose/install)
 
-  Please consult [Vagrant Documentation](https://www.vagrantup.com/docs/)  if you face any installation errors for step 1.
+  ```bash
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-2. Download the CerebralCortex-Vagrant repository.  
-    Download location: https://github.com/MD2Korg/CerebralCortex-Vagrant/archive/personal.zip
+  sudo chmod +x /usr/local/bin/docker-compose
+  ```
+  Please consult the [Docker](https://docker.com) site if you face any installation errors for step 1 and 2.
 
-3. Extract the `CerebralCortex-Vagrant-personal.zip` file and open it in `Explorer`
 
-4. Double click on the `cerebralcortex_initialize.cmd` file which will launch a command window and begin the installation of the Cerebral Cortex platform. This installation will take some time.
+3. Download or clone this CerebralCortex-Platform repository.
+  ```bash
+  git clone https://github.com/MD2KOrg/CerebralCortex-Platform
+  cd CerebralCortex-Platform
+  docker-compose up
+  ```
 
-5. When installation is complete, double-click on `cerebralcortex_console.cmd` (found in the CerebralCortex-Vagrant-personal folder). You will need to run all subsequent commands in the resulting command prompt window. -->
+## Windows 7+:
+
+1. [Install Docker](https://docs.docker.com/docker-for-windows/install/)
+
+2. Download the CerebralCortex-Platform repository.  
+    Download location: https://github.com/MD2Korg/CerebralCortex-Platform/archive/master.zip
+
+3. Extract the `CerebralCortex-Platform.zip` file and open it in `Explorer`
+
+4. Docker-compose instructions go here
+
 
 ## Launch Cerebral Cortex
 Open the following link to view the Cerebral Cortex launch page: http://localhost/
