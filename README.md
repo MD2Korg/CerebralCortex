@@ -93,7 +93,7 @@ Open the following link to view the Cerebral Cortex launch page: http://localhos
 
 
 # WARNING
-Cerebral Cortex is not configured with SSL/TLS support out of the box and should NOT be utilize to collect human subject data due to non-compliant nature of this with most/all security requirements.
+This version Cerebral Cortex is not configured with SSL/TLS support out of the box and should NOT be utilized to collect human subject data for research.  It is currently designed for development, testing, and training purposes. We are working on a secure-by-default configuration for Cerebral Cortex to avoid this problem in the future.  If you would like to secure this system as is, you will need to configure NGINX's SSL/TLS support manually.
 
 
 
