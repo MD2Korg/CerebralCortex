@@ -54,6 +54,8 @@ These steps are performed from the command line and do not need a graphical inte
   cd CerebralCortex-Platform
   docker-compose up
   ```
+  In case you encounter an error relating to permissions, add your user to the docker group.
+ `sudo usermod -aG docker $USER`
 
 ## Mac OS X:
 
