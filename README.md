@@ -78,7 +78,7 @@ These steps are performed from the command line and do not need a graphical inte
   docker-compose up
   ```
 
-## Windows 7+:
+## Windows 10:
 
 1. [Install Docker](https://docs.docker.com/docker-for-windows/install/)
 
@@ -87,7 +87,16 @@ These steps are performed from the command line and do not need a graphical inte
 
 3. Extract the `CerebralCortex-Platform.zip` file and open it in `Explorer`
 
-4. Docker-compose instructions to be determined once a Windows machine can be found to test with.
+4. Open `PowerShell` and run the following commands
+  ```PowerShell
+  PS C:\Users\hnat> cd Downloads\CerebralCortex-Platform-master
+  PS C:\Users\hnat\Downloads\CerebralCortex-Platform-master>
+
+  PS C:\Users\hnat\Downloads\CerebralCortex-Platform-master> docker-compose up
+  ```
+
+  Note: Approve the Docker's requests for accessing a shared drive
+
 
 
 ## Launch Cerebral Cortex
