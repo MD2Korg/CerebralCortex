@@ -85,7 +85,7 @@ These steps are performed from the command line and do not need a graphical inte
 2. Download the CerebralCortex-Platform repository.  
     Download location: [https://github.com/MD2Korg/CerebralCortex-Platform/archive/master.zip](https://github.com/MD2Korg/CerebralCortex-Platform/archive/master.zip)
 
-3. Extract the `CerebralCortex-Platform.zip` file and open it in `Explorer`
+3. Extract the `CerebralCortex-Platform-master.zip` file and open it in `Explorer`
 
 4. Open `PowerShell` and run the following commands
   ```PowerShell
