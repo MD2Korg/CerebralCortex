@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+# Frontend web proxy for accessing services and providing TLS encryption
+  nginx:
+    volumes:
+      - ./nginx/site:/var/www
+      - /opt/cerebralcortex/keys/md2k-bundle.crt:/etc/ssh/certs/ssl-cert.crt
+      - /opt/cerebralcortex/keys/md2k.org.key:/etc/ssh/certs/ssl-cert.key
+      - ./cc_conf:/cc_conf
