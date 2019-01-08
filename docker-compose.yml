@@ -11,6 +11,7 @@ services:
       - ./nginx/site:/var/www
       - ./nginx/nginx-selfsigned.crt:/etc/ssh/certs/ssl-cert.crt
       - ./nginx/nginx-selfsigned.key:/etc/ssh/certs/ssl-cert.key
+      - ./nginx/insecure_site.conf:/etc/nginx/site.conf
     ports:
       - "443:443"
       - "80:80"

@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get install -y curl && \
     rm -rf /var/lib/apt/lists/*
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY *.conf /etc/nginx/
 COPY *.crt /etc/nginx/
 COPY *.key /etc/nginx/
 
