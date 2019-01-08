@@ -252,6 +252,12 @@ Format: docker-compose run dataanalysis sh compute_features.sh StartDate(YYYYMMD
 docker-compose run dataanalysis sh compute_features.sh 20181101 20190101
 ```
 
+### Running Data Analysis in the Jupyter notebook
+The Jupyter notebook also has the DataAnalysis code in the DataAnalysis folder.
+In this folder there is a sample notebook `Simple_driver.ipynb` that can be used
+to execute features described above. In this sample, the phone based features are
+computed. Change the input parameters in the notebook to compute the desired features.
+
 
 
 ## Starting and stopping Cerebral Cortex
