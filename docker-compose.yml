@@ -107,7 +107,7 @@ services:
       - ./cc_conf:/home/md2k/cc_conf
       - ./mount_points/cc_data:/cc_data
       - ./jupyter:/home/md2k/demo
-    command: sh -c "rm -r /home/md2k/DataAnalysis && git clone https://github.com/MD2Korg/CerebralCortex-DataAnalysis.git /home/md2k/DataAnalysis && chown -R md2k /home/md2k/DataAnalysis/ && chown -R md2k /cc_data/ && jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py"
+    command: sh -c "chown -R md2k /cc_data/ && jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py"
 
 
 
