@@ -3,8 +3,8 @@ This repository is allows you to install and evaluate the Cerebral Cortex platfo
 
 ### Note
 We have renamed following repositories.
-* CerebralCortex-Platform **->** CerebralCortex
-* CerebralCortex - > CerebralCortex **->** CerebralCortex-Kernel
+* CerebralCortex-Platform -> CerebralCortex
+* CerebralCortex - >  CerebralCortex-Kernel
 
 ### Releases
 * **2018.11.16** Cerebral Cortex Cloud Platform
