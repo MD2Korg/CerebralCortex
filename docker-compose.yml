@@ -23,7 +23,7 @@ services:
 
 
   dataingestion:
-    image: md2korg/cerebralcortex-dataingestion
+    image: md2korg/cerebralcortex-dataingestion:2.4.0
     container_name: cerebralcortex-DataIngestion
     restart: always
     volumes:
@@ -32,7 +32,7 @@ services:
       - ./cc_conf:/cc_conf
 
   dataanalysis:
-    image: md2korg/cerebralcortex-dataanalysis
+    image: md2korg/cerebralcortex-dataanalysis:2.4.0
     container_name: cerebralcortex-DataAnalysis
     # restart: always
     volumes:
@@ -42,7 +42,7 @@ services:
 
 
   apiserver:
-    image: md2korg/cerebralcortex-apiserver
+    image: md2korg/cerebralcortex-apiserver:2.4.0
     container_name: cerebralcortex-apiserver
     restart: always
     expose:
@@ -95,7 +95,7 @@ services:
 
 # Data Science Dashboard Interface
   jupyter:
-    image: md2korg/cerebralcortex-jupyter
+    image: md2korg/cerebralcortex-jupyter:2.4.0
     container_name: cerebralcortex-jupyterhub
     ports:
       - 8000
