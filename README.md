@@ -7,14 +7,16 @@ You can find more information about MD2K software on our [software website](http
 
 This repository is allows you to install and evaluate the Cerebral Cortex platform.
 
+### Brief Overview of CerebralCortex Architecture
 ![CC-Github-Architecture](imgs/CC-Github-Architecture.png)
-* [mCerebrum](https://github.com/MD2Korg/mCerebrum) - Mobile platform to collect mobile sensor data
 * [CerebralCortex-APIServer](https://github.com/MD2Korg/CerebralCortex-APIServer)
 * [CerebralCortex-DataIngestion](https://github.com/MD2Korg/CerebralCortex-DataIngestion)
 * [CerebralCortex-Kernel](https://github.com/MD2Korg/CerebralCortex-Kernel)
 * [CerebralCortex-DataAnalysis](https://github.com/MD2Korg/CerebralCortex-DataAnalysis)
 * [CerebralCortex-Jupyter](https://github.com/MD2Korg/CerebralCortex-Jupyter)
-* Participants-UI - TODO
+* Non-CerebralCortex Repos:
+    - Participants-UI - TODO
+    - [mCerebrum](https://github.com/MD2Korg/mCerebrum) - Mobile platform to collect mobile sensor data
 
 ### Note
 We have renamed following repositories.
