@@ -1,4 +1,10 @@
 # Cerebral Cortex Cloud Platform
+Cerebral Cortex is the big data cloud companion of mCerebrum designed to support population-scale data analysis, visualization, model development, and intervention design for mobile sensor data.
+
+CerebralCortex core provides an interface to retrieve/store mobile sensor raw data and metadata.
+
+You can find more information about MD2K software on our [software website](https://md2k.org/software) or the MD2K organization on our [MD2K website](https://md2k.org/).
+
 This repository is allows you to install and evaluate the Cerebral Cortex platform.
 
 ### Note
