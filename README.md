@@ -1,6 +1,11 @@
 # Cerebral Cortex Cloud Platform
 This repository is allows you to install and evaluate the Cerebral Cortex platform.
 
+### Note
+We have renamed following repositories.
+* CerebralCortex-Platform **->** CerebralCortex
+* CerebralCortex - > CerebralCortex **->** CerebralCortex-Kernel
+
 ### Releases
 * **2018.11.16** Cerebral Cortex Cloud Platform
   - Grafana visualization support
