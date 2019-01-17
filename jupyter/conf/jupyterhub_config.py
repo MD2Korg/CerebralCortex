@@ -369,6 +369,7 @@ c.JupyterHub.hub_port = 8082
 #  environment variables. Most, including the default, do not. Consult the
 #  documentation for your spawner to verify!
 #c.Spawner.cmd = ['jupyterhub-singleuser']
+c.Spawner.cmd = ['jupyter-labhub']
 
 ## Minimum number of cpu-cores a single-user notebook server is guaranteed to
 #  have available.

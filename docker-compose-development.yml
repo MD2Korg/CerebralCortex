@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  dataingestion:
+    image: md2korg/cerebralcortex-dataingestion:latest
+
+  dataanalysis:
+    image: md2korg/cerebralcortex-dataanalysis:latest
+
+  apiserver:
+    image: md2korg/cerebralcortex-apiserver:latest
+
+  jupyter:
+    # image: md2korg/cerebralcortex-jupyter:latest
+    build: ../CerebralCortex-Jupyter
