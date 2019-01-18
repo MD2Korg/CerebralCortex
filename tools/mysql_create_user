@@ -1,0 +1,21 @@
+#!/bin/bash
+
+username="$1"
+
+uuid=$(uuidgen)
+uuid=${uuid,,}
+
+password=$(cat /dev/urandom | tr -dc a-z0-9 | fold -w 8 | head -n 1)
+
+encoded_password=$(echo -n $password | sha256sum | cut -d " " -f 1)
+
+type="user"
+
+user_metadata="{\\\"study_name\\\":\\\"demo\\\"}"
+
+active="1"
+
+stmt="insert into user (identifier, username, password, token, user_role, user_metadata, active, confirmed_at) values (\"$uuid\",\"$username\",\"$encoded_password\",\"$password\",\"$type\",\"$user_metadata\",$active,now() )"
+
+docker-compose exec mysql mysql -u root -ppass cerebralcortex -e "$stmt"
+echo "User created (login:password): $username,$password"

@@ -11,5 +11,4 @@ services:
     image: md2korg/cerebralcortex-apiserver:latest
 
   jupyter:
-    # image: md2korg/cerebralcortex-jupyter:latest
-    build: ../CerebralCortex-Jupyter
+    image: md2korg/cerebralcortex-jupyter:latest
