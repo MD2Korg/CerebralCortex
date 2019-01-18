@@ -18,4 +18,8 @@ active="1"
 stmt="insert into user (identifier, username, password, token, user_role, user_metadata, active, confirmed_at) values (\"$uuid\",\"$username\",\"$encoded_password\",\"$password\",\"$type\",\"$user_metadata\",$active,now() )"
 
 docker-compose exec mysql mysql -u root -ppass cerebralcortex -e "$stmt"
+
+cmd="useradd $username -d /home/$username -m && echo \"$username:$password\" | chpasswd"
+docker-compose exec jupyter bash -c "$cmd"
+
 echo "User created (login:password): $username,$password"
