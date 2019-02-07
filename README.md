@@ -7,7 +7,7 @@ You can find more information about MD2K software on our [software website](http
 
 This repository is allows you to install and evaluate the Cerebral Cortex platform.
 
-### Brief Overview of CerebralCortex Architecture
+### Brief Overview of CerebralCortex Git Repos Structure
 ![CC-Github-Architecture](imgs/CC-Github-Architecture.png)
 * [CerebralCortex-APIServer](https://github.com/MD2Korg/CerebralCortex-APIServer)
 * [CerebralCortex-DataIngestion](https://github.com/MD2Korg/CerebralCortex-DataIngestion)
