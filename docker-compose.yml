@@ -22,27 +22,27 @@ services:
       - jupyter
 
 
-  dataingestion:
-    image: md2korg/cerebralcortex-dataingestion:2.4.0
-    container_name: cerebralcortex-DataIngestion
-    restart: always
-    volumes:
-      - ./mount_points/apiserver:/data
-      - ./mount_points/cc_data:/cc_data
-      - ./cc_conf:/cc_conf
+#  dataingestion:
+#    image: md2korg/cerebralcortex-dataingestion:2.4.0
+#    container_name: cerebralcortex-DataIngestion
+#    restart: always
+#    volumes:
+#      - ./mount_points/apiserver:/data
+#      - ./mount_points/cc_data:/cc_data
+#      - ./cc_conf:/cc_conf
 
-  dataanalysis:
-    image: md2korg/cerebralcortex-dataanalysis:2.4.0
-    container_name: cerebralcortex-DataAnalysis
-    # restart: always
-    volumes:
-      - ./mount_points/cc_data:/cc_data
-      - ./cc_conf:/cc_conf
+#  dataanalysis:
+#    image: md2korg/cerebralcortex-dataanalysis:2.4.0
+#    container_name: cerebralcortex-DataAnalysis
+#    # restart: always
+#    volumes:
+#      - ./mount_points/cc_data:/cc_data
+#      - ./cc_conf:/cc_conf
 
 
 
   apiserver:
-    image: md2korg/cerebralcortex-apiserver:2.4.0
+    image: md2korg/cerebralcortex-apiserver:3.0.0
     container_name: cerebralcortex-apiserver
     restart: always
     expose:
@@ -153,15 +153,15 @@ services:
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
       - ./mount_points/mysql:/var/lib/mysql
 
-  minio:
-    image: minio/minio
-    container_name: cerebralcortex-minio
-    restart: always
-    ports:
-      - 9000:9000 # Default minio port
-    environment:
-      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
-      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
-    command: server /export
-    volumes:
-      - ./minio:/export
+#  minio:
+#    image: minio/minio
+#    container_name: cerebralcortex-minio
+#    restart: always
+#    ports:
+#      - 9000:9000 # Default minio port
+#    environment:
+#      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
+#      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+#    command: server /export
+#    volumes:
+#      - ./minio:/export

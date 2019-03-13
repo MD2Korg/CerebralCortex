@@ -4,64 +4,45 @@
 cc:
   debug: True # Setting this to True will log and print errors on console as well
   throw_exception: False #if this is set to True then application will get exceptions
+  auth_token_expire_time: 40000 #seconds
+  auth_encryption_key: "md@k&#8"
 
 #########################################################################
-###################### NoSQL Storage ####################################
+#                        NoSQL Storage                                  #
 #########################################################################
 nosql_storage: filesystem
 
 filesystem:
-  filesystem_path: "/cc_data/" # in case of nosql_store=filesystem, provide directory path where data shall be stored
+  # in case of nosql_store=filesystem, provide directory path where all processed-data shall be stored
+  filesystem_path: "/cc_data/"
 
 #hdfs:
-#  host: 127.0.0.1
+#  host: localhost
 #  port: 9001
-#  raw_files_dir: "/cerebralcortex/data/"
-#
+#  raw_files_dir: "cerebralcortex/cerebralcortex/"
 
-#s3:# AWS-S3  - This API is also used for AWS-S3 storage. Please specify minio as nosql_storage if you want to use AWS-S3.
-  # host: minio # for amazon pass s3.amazonaws.com and for minio simpley pass url of minio server
-  # port: 9000
-  # access_key: 'ZngmrLWgbSfZUvgocyeH'
-  # secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
-  # input_bucket_name: 'cerebralcortex-mperf' # required for aws-s3
-  # output_bucket_name: 'cerebralcortex-mperf-output' # required for aws-s3
-  # dir_prefix: 'cerebralcortex/data/'
-  # secure: False #ssl
+#########################################################################
+#                        OBJECT Storage                                 #
+#########################################################################
+
+object_storage:
+  object_storage_path: "/cc_data/"
 
 
 #########################################################################
-###################### Object Storage ###################################
-#########################################################################
-minio:
-  host: minio 
-  port: 9000
-  access_key: 'ZngmrLWgbSfZUvgocyeH'
-  secret_key: 'IwUnI5w0f5Hf1v2qVwcr'
-  input_bucket_name: 'cerebralcortex-mperf' # required for aws-s3
-  output_bucket_name: 'cerebralcortex-mperf-output' # required for aws-s3
-  dir_prefix: 'cerebralcortex/data/'
-  secure: False #ssl
-
-#########################################################################
-###################### Relational Storage ###############################
+#                          Relational Storage                           #
 #########################################################################
 relational_storage: mysql
 
 mysql:
-  host: mysql
-  port: 3306
-  connection_pool_name: "CC_Pool"
-  connection_pool_size: 1
+  host: 127.0.0.1 # change if MySQL is installed remotely
+  port: 3306 # Change if MySQL is not using default port
+  db_user: root # Change
+  db_pass: pass # Change
+
+  # Note: do not change following parameters if you don't know what you are doing
   database: cerebralcortex
-  db_user: root
-  db_pass: pass
-  datastream_table: stream
-  kafka_offsets_table: kafka_offsets
-  processing_module_table: processing_module
-  data_replay_table: data_replay_md2k2
-  user_table: user
-  study_table: study
+  connection_pool_size: 1
 
 #########################################################################
 ###################### Visualization Data Storage #######################
@@ -69,11 +50,11 @@ mysql:
 visualization_storage: influxdb
 
 influxdb:
- host: influxdb
- port: 8086
- database: cerebralcortex_raw
- db_user: ""
- db_pass: ""
+  host: 127.0.0.1
+  port: 8086
+  database: cerebralcortex_raw
+  db_user: ""
+  db_pass: ""
 
 #########################################################################
 ########################### Messaging Service ###########################
@@ -81,14 +62,31 @@ influxdb:
 messaging_service: kafka
 
 kafka:
-  host: kafka
-  port: 9092
-
-#########################################################################
-###################### Data Provenance Storage###########################
-#########################################################################
-data_provenance: none
-
-zack:
   host: 127.0.0.1
-  port: 8080
+  port: 9092
+  # ping__kafka: how often CC-kafka shall check for new messages (in seconds)
+  ping_kafka: 5
+  consumer_group_id: "md2k-data-ingestion"
+
+#########################################################################
+#                          SPARK CONFIGS                                #
+#########################################################################
+# Do not change if you do not know what you are doing
+# TODO
+#spark:
+#  host:
+#  enable_gui: True
+#  master:
+
+#########################################################################
+#                          Data Provenance Storage                      #
+#########################################################################
+provenance: none
+
+mprove:
+#  host: 127.0.0.1 # change if MySQL is installed remotely
+#  port: 8088 # Change if MySQL is not using default port
+#  username: 'sample' # Change
+#  pass: 'default' # Change
+#  namespace: 'http://mprov.md2k.org'
+#  graph_name: 'mProv-graph'

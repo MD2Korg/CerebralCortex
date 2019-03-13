@@ -3,18 +3,12 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 22, 2019 at 10:42 AM
--- Server version: 5.7.24-0ubuntu0.18.04.1
--- PHP Version: 7.0.33-1+ubuntu18.04.1+deb.sury.org+1
+-- Generation Time: Mar 12, 2019 at 10:06 PM
+-- Server version: 5.7.25-0ubuntu0.18.04.2
+-- PHP Version: 7.0.33-5+ubuntu18.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `cerebralcortex`
@@ -52,6 +46,23 @@ CREATE TABLE `data_replay` (
   `metadata` json NOT NULL,
   `processed` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ingestion_logs`
+--
+
+DROP TABLE IF EXISTS `ingestion_logs`;
+CREATE TABLE `ingestion_logs` (
+  `row_id` int(4) NOT NULL,
+  `user_id` varchar(40) NOT NULL,
+  `stream_name` varchar(255) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `fault_type` varchar(100) NOT NULL,
+  `fault_description` text NOT NULL,
+  `success` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -102,6 +113,7 @@ CREATE TABLE `user` (
   `token_expiry` datetime DEFAULT CURRENT_TIMESTAMP,
   `user_role` varchar(255) DEFAULT NULL,
   `user_metadata` json DEFAULT NULL,
+  `user_settings` json DEFAULT NULL,
   `active` tinyint(1) DEFAULT '0',
   `confirmed_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -121,7 +133,19 @@ ALTER TABLE `cc_cache`
 --
 ALTER TABLE `data_replay`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
+  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`),
+  ADD KEY `stream_name` (`stream_name`);
+
+--
+-- Indexes for table `ingestion_logs`
+--
+ALTER TABLE `ingestion_logs`
+  ADD PRIMARY KEY (`row_id`),
+  ADD UNIQUE KEY `file_path_2` (`file_path`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `stream_name` (`stream_name`),
+  ADD KEY `file_path` (`file_path`),
+  ADD KEY `fault_type` (`fault_type`);
 
 --
 -- Indexes for table `kafka_offsets`
@@ -155,6 +179,11 @@ ALTER TABLE `user`
 ALTER TABLE `data_replay`
   MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `ingestion_logs`
+--
+ALTER TABLE `ingestion_logs`
+  MODIFY `row_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42510;
+--
 -- AUTO_INCREMENT for table `kafka_offsets`
 --
 ALTER TABLE `kafka_offsets`
@@ -163,12 +192,9 @@ ALTER TABLE `kafka_offsets`
 -- AUTO_INCREMENT for table `stream`
 --
 ALTER TABLE `stream`
-  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
