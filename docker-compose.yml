@@ -18,7 +18,7 @@ services:
     depends_on:
       - grafana
       - apiserver
-      - minio
+#      - minio
       - jupyter
 
 
@@ -50,16 +50,16 @@ services:
     depends_on:
       - mysql
       - kafka
-      - minio
+      #- minio
     environment:
-      - MINIO_HOST=${MINIO_HOST:-minio}
-      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
-      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+#      - MINIO_HOST=${MINIO_HOST:-minio}
+#      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-ZngmrLWgbSfZUvgocyeH}
+#      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
       - MYSQL_HOST=${MYSQL:-mysql}
       - MYSQL_DB_USER=${MYSQL_ROOT_USER:-root}
       - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-pass}
       - KAFKA_HOST=${KAFKA_HOST:-kafka}
-      - JWT_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
+#      - JWT_SECRET_KEY=${MINIO_SECRET_KEY:-IwUnI5w0f5Hf1v2qVwcr}
     volumes:
       - ./mount_points/apiserver:/data
       - ./cc_conf:/cc_conf
