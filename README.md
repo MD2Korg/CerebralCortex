@@ -140,19 +140,16 @@ docker-compose ps
 
 The above commands display the status of all the services as such as the example shown below.
 ```
-Name                          Command                  State                             Ports
----------------------------------------------------------------------------------------------------------------------------------
-cerebralcortex-DataAnalysis    sh compute_features.sh 201 ...   Exit 0
-cerebralcortex-DataIngestion   sh run.sh                        Up (healthy)
-cerebralcortex-apiserver       /entrypoint.sh /start.sh         Up (healthy)   443/tcp, 80/tcp
-cerebralcortex-grafana         /run.sh                          Up             0.0.0.0:3000->3000/tcp
-cerebralcortex-influxdb        /entrypoint.sh influxd           Up             0.0.0.0:8086->8086/tcp
-cerebralcortex-jupyterhub      jupyterhub --no-ssl --conf ...   Up (healthy)   0.0.0.0:15026->8000/tcp
-cerebralcortex-kafka           start-kafka.sh                   Up             0.0.0.0:9092->9092/tcp
-cerebralcortex-minio           /usr/bin/docker-entrypoint ...   Up (healthy)   0.0.0.0:9000->9000/tcp
-cerebralcortex-mysql           docker-entrypoint.sh mysqld      Up             0.0.0.0:3306->3306/tcp, 33060/tcp
-cerebralcortex-nginx           nginx -g daemon off;             Up (healthy)   0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp
-cerebralcortex-zookeeper       /bin/sh -c /usr/sbin/sshd  ...   Up             0.0.0.0:2181->2181/tcp, 22/tcp, 2888/tcp, 3888/tcp
+          Name                         Command                       State                                 Ports                       
+---------------------------------------------------------------------------------------------------------------------------------------
+cerebralcortex-apiserver    /entrypoint.sh /start.sh         Up (health: starting)   443/tcp, 80/tcp                                   
+cerebralcortex-grafana      /run.sh                          Up                      0.0.0.0:3000->3000/tcp                            
+cerebralcortex-influxdb     /entrypoint.sh influxd           Up                      0.0.0.0:8086->8086/tcp                            
+cerebralcortex-jupyterhub   sh -c chown -R md2k /cc_da ...   Up (health: starting)   0.0.0.0:32777->8000/tcp                           
+cerebralcortex-kafka        start-kafka.sh                   Up                      0.0.0.0:9092->9092/tcp                            
+cerebralcortex-mysql        docker-entrypoint.sh mysqld      Up                      0.0.0.0:3306->3306/tcp, 33060/tcp                 
+cerebralcortex-nginx        nginx -g daemon off;             Up (health: starting)   0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp          
+cerebralcortex-zookeeper    /bin/sh -c /usr/sbin/sshd  ...   Up                      0.0.0.0:2181->2181/tcp, 22/tcp, 2888/tcp, 3888/tcp
 ```
 
 
