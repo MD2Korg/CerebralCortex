@@ -3,16 +3,16 @@
 #########################################################################
 
 # Path of a directory where all the mCerebrum uploaded files will be stored before processing
-data_dir: "/data/"
+#data_dir: "/data/"
 
 apiserver:
   host: 0.0.0.0
-  port: 8088
+  port: 8089
   secret_key: 'super-secret'
   token_expire_time: 40000 #seconds
   debug: True
 
 routes: # Don't change if you don't know what you are doing
-  auth: "auth"
+  user: "user"
   stream: "stream"
-  object: "object"
+  object: "bucket"

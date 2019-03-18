@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 12, 2018 at 12:41 PM
--- Server version: 5.7.21-0ubuntu0.17.10.1
--- PHP Version: 7.1.15-0ubuntu0.17.10.1
+-- Generation Time: Mar 12, 2019 at 10:06 PM
+-- Server version: 5.7.25-0ubuntu0.18.04.2
+-- PHP Version: 7.0.33-5+ubuntu18.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -15,6 +15,18 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `cerebralcortex` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `cerebralcortex`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cc_cache`
+--
+
+DROP TABLE IF EXISTS `cc_cache`;
+CREATE TABLE `cc_cache` (
+  `cache_key` varchar(255) NOT NULL,
+  `cache_value` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -34,6 +46,23 @@ CREATE TABLE `data_replay` (
   `metadata` json NOT NULL,
   `processed` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ingestion_logs`
+--
+
+DROP TABLE IF EXISTS `ingestion_logs`;
+CREATE TABLE `ingestion_logs` (
+  `row_id` int(4) NOT NULL,
+  `user_id` varchar(40) NOT NULL,
+  `stream_name` varchar(255) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `fault_type` varchar(100) NOT NULL,
+  `fault_description` text NOT NULL,
+  `success` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -59,16 +88,12 @@ CREATE TABLE `kafka_offsets` (
 
 DROP TABLE IF EXISTS `stream`;
 CREATE TABLE `stream` (
-  `identifier` varchar(36) NOT NULL,
-  `owner` varchar(36) NOT NULL,
-  `name` varchar(150) NOT NULL,
-  `data_descriptor` json NOT NULL,
-  `execution_context` json NOT NULL,
-  `annotations` json NOT NULL,
-  `type` varchar(45) NOT NULL,
-  `start_time` datetime DEFAULT NULL,
-  `end_time` datetime DEFAULT NULL,
-  `tmp` int(11) NOT NULL
+  `row_id` int(5) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `version` varchar(20) NOT NULL,
+  `metadata_hash` varchar(45) NOT NULL,
+  `metadata` json NOT NULL,
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -79,7 +104,8 @@ CREATE TABLE `stream` (
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `identifier` varchar(40) DEFAULT NULL,
+  `row_id` int(5) NOT NULL,
+  `user_id` varchar(40) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `token` text,
@@ -87,39 +113,39 @@ CREATE TABLE `user` (
   `token_expiry` datetime DEFAULT CURRENT_TIMESTAMP,
   `user_role` varchar(255) DEFAULT NULL,
   `user_metadata` json DEFAULT NULL,
+  `user_settings` json DEFAULT NULL,
   `active` tinyint(1) DEFAULT '0',
-  `confirmed_at` datetime DEFAULT NULL,
-  `tmp_id` int(11) NOT NULL
+  `confirmed_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `cc_cache`
---
-
-DROP TABLE IF EXISTS `cc_cache`;
-CREATE TABLE `cc_cache` (
-      `cache_key` varchar(255) NOT NULL,
-      `cache_value` text,
-      PRIMARY KEY (`cache_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `user`
---
--- md2k's password is md2k
-INSERT INTO `user` (`identifier`, `username`, `password`, `token`, `token_issued`, `token_expiry`, `user_role`, `user_metadata`, `active`, `confirmed_at`, `tmp_id`) VALUES
-('636fcc1f-8966-4e63-a9df-0cbaa6e9296c', 'md2k', '95381c2877d71e5a9f06134b92e8faedef9aebf345afde752b34edab9c840ced', NULL, '2017-09-28 23:08:29', '2017-09-28 23:08:29', 'demo', '{"study_name": "demo"}', 1, NULL, 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `cc_cache`
+--
+ALTER TABLE `cc_cache`
+  ADD PRIMARY KEY (`cache_key`);
+
+--
 -- Indexes for table `data_replay`
 --
 ALTER TABLE `data_replay`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`);
+  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`),
+  ADD KEY `stream_name` (`stream_name`);
+
+--
+-- Indexes for table `ingestion_logs`
+--
+ALTER TABLE `ingestion_logs`
+  ADD PRIMARY KEY (`row_id`),
+  ADD UNIQUE KEY `file_path_2` (`file_path`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `stream_name` (`stream_name`),
+  ADD KEY `file_path` (`file_path`),
+  ADD KEY `fault_type` (`fault_type`);
 
 --
 -- Indexes for table `kafka_offsets`
@@ -133,18 +159,15 @@ ALTER TABLE `kafka_offsets`
 -- Indexes for table `stream`
 --
 ALTER TABLE `stream`
-  ADD PRIMARY KEY (`tmp`),
-  ADD KEY `UUID` (`identifier`),
-  ADD KEY `name` (`name`),
-  ADD KEY `owner` (`owner`);
+  ADD PRIMARY KEY (`row_id`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`tmp_id`),
+  ADD PRIMARY KEY (`row_id`),
   ADD UNIQUE KEY `user_name` (`username`),
-  ADD KEY `identifier` (`identifier`);
+  ADD KEY `identifier` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -156,6 +179,11 @@ ALTER TABLE `user`
 ALTER TABLE `data_replay`
   MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `ingestion_logs`
+--
+ALTER TABLE `ingestion_logs`
+  MODIFY `row_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42510;
+--
 -- AUTO_INCREMENT for table `kafka_offsets`
 --
 ALTER TABLE `kafka_offsets`
@@ -164,9 +192,9 @@ ALTER TABLE `kafka_offsets`
 -- AUTO_INCREMENT for table `stream`
 --
 ALTER TABLE `stream`
-  MODIFY `tmp` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `tmp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;

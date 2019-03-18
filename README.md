@@ -7,16 +7,10 @@ You can find more information about MD2K software on our [software website](http
 
 This repository is allows you to install and evaluate the Cerebral Cortex platform.
 
-### Brief Overview of CerebralCortex Git Repos Structure
-![CC-Github-Architecture](imgs/CC-Github-Architecture.png)
+### Python Source Code Repos
 * [CerebralCortex-APIServer](https://github.com/MD2Korg/CerebralCortex-APIServer)
-* [CerebralCortex-DataIngestion](https://github.com/MD2Korg/CerebralCortex-DataIngestion)
 * [CerebralCortex-Kernel](https://github.com/MD2Korg/CerebralCortex-Kernel)
-* [CerebralCortex-DataAnalysis](https://github.com/MD2Korg/CerebralCortex-DataAnalysis)
-* [CerebralCortex-Jupyter](https://github.com/MD2Korg/CerebralCortex-Jupyter)
-* Non-CerebralCortex Repos:
-    - Participants-UI - TODO
-    - [mCerebrum](https://github.com/MD2Korg/mCerebrum) - Mobile platform to collect mobile sensor data
+
 
 ### Note
 We have renamed following repositories.
@@ -24,12 +18,12 @@ We have renamed following repositories.
 * CerebralCortex - >  CerebralCortex-Kernel
 
 ### Releases
-* **2018.11.16** Cerebral Cortex Cloud Platform
+* **2018.03.18** Cerebral Cortex Cloud Platform
   - Grafana visualization support
   - Jupyter Notebook analysis platform
-  - [Cerebral Cortex 2.3.0](https://github.com/MD2Korg/CerebralCortex/tree/2.3.0)
+  - [Cerebral Cortex 3.0.0](https://github.com/MD2Korg/CerebralCortex-Kernel/releases)
   - File system based storage architecture
-  - Ability to collect data from [mCerebrum](https://md2k.org/mc2015) app
+  - Ability to collect data from [mCerebrum](https://md2k.org/mc2015) app (**Note:** mCerebrum is not compatiable for CerebralCortex 3.0.0 yet.)
 
 # Disclaimer
 This software is intended for informational and demonstration purposes only and is not designed to diagnose, treat, cure, prevent, or track disease or health states. No content provided in this software is intended to serve as a substitute for any kind of professional (e.g., medical) advice.
@@ -140,19 +134,16 @@ docker-compose ps
 
 The above commands display the status of all the services as such as the example shown below.
 ```
-Name                          Command                  State                             Ports
----------------------------------------------------------------------------------------------------------------------------------
-cerebralcortex-DataAnalysis    sh compute_features.sh 201 ...   Exit 0
-cerebralcortex-DataIngestion   sh run.sh                        Up (healthy)
-cerebralcortex-apiserver       /entrypoint.sh /start.sh         Up (healthy)   443/tcp, 80/tcp
-cerebralcortex-grafana         /run.sh                          Up             0.0.0.0:3000->3000/tcp
-cerebralcortex-influxdb        /entrypoint.sh influxd           Up             0.0.0.0:8086->8086/tcp
-cerebralcortex-jupyterhub      jupyterhub --no-ssl --conf ...   Up (healthy)   0.0.0.0:15026->8000/tcp
-cerebralcortex-kafka           start-kafka.sh                   Up             0.0.0.0:9092->9092/tcp
-cerebralcortex-minio           /usr/bin/docker-entrypoint ...   Up (healthy)   0.0.0.0:9000->9000/tcp
-cerebralcortex-mysql           docker-entrypoint.sh mysqld      Up             0.0.0.0:3306->3306/tcp, 33060/tcp
-cerebralcortex-nginx           nginx -g daemon off;             Up (healthy)   0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp
-cerebralcortex-zookeeper       /bin/sh -c /usr/sbin/sshd  ...   Up             0.0.0.0:2181->2181/tcp, 22/tcp, 2888/tcp, 3888/tcp
+          Name                         Command                       State                                 Ports                       
+---------------------------------------------------------------------------------------------------------------------------------------
+cerebralcortex-apiserver    /entrypoint.sh /start.sh         Up (health: starting)   443/tcp, 80/tcp                                   
+cerebralcortex-grafana      /run.sh                          Up                      0.0.0.0:3000->3000/tcp                            
+cerebralcortex-influxdb     /entrypoint.sh influxd           Up                      0.0.0.0:8086->8086/tcp                            
+cerebralcortex-jupyterhub   sh -c chown -R md2k /cc_da ...   Up (health: starting)   0.0.0.0:32777->8000/tcp                           
+cerebralcortex-kafka        start-kafka.sh                   Up                      0.0.0.0:9092->9092/tcp                            
+cerebralcortex-mysql        docker-entrypoint.sh mysqld      Up                      0.0.0.0:3306->3306/tcp, 33060/tcp                 
+cerebralcortex-nginx        nginx -g daemon off;             Up (health: starting)   0.0.0.0:443->443/tcp, 0.0.0.0:80->80/tcp          
+cerebralcortex-zookeeper    /bin/sh -c /usr/sbin/sshd  ...   Up                      0.0.0.0:2181->2181/tcp, 22/tcp, 2888/tcp, 3888/tcp
 ```
 
 
