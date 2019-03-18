@@ -14,7 +14,7 @@ nosql_storage: filesystem
 
 filesystem:
   # in case of nosql_store=filesystem, provide directory path where all processed-data shall be stored
-  filesystem_path: "/cc_data/"
+  filesystem_path: "/data/"
 
 #hdfs:
 #  host: localhost
@@ -26,7 +26,7 @@ filesystem:
 #########################################################################
 
 object_storage:
-  object_storage_path: "/cc_data/"
+  object_storage_path: "/data/"
 
 
 #########################################################################

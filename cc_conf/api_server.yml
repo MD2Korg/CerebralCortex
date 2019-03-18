@@ -15,4 +15,4 @@ apiserver:
 routes: # Don't change if you don't know what you are doing
   user: "user"
   stream: "stream"
-  object: "object"
+  object: "bucket"
