@@ -7,16 +7,10 @@ You can find more information about MD2K software on our [software website](http
 
 This repository is allows you to install and evaluate the Cerebral Cortex platform.
 
-### Brief Overview of CerebralCortex Git Repos Structure
-![CC-Github-Architecture](imgs/CC-Github-Architecture.png)
+### Python Source Code Repos
 * [CerebralCortex-APIServer](https://github.com/MD2Korg/CerebralCortex-APIServer)
-* [CerebralCortex-DataIngestion](https://github.com/MD2Korg/CerebralCortex-DataIngestion)
 * [CerebralCortex-Kernel](https://github.com/MD2Korg/CerebralCortex-Kernel)
-* [CerebralCortex-DataAnalysis](https://github.com/MD2Korg/CerebralCortex-DataAnalysis)
-* [CerebralCortex-Jupyter](https://github.com/MD2Korg/CerebralCortex-Jupyter)
-* Non-CerebralCortex Repos:
-    - Participants-UI - TODO
-    - [mCerebrum](https://github.com/MD2Korg/mCerebrum) - Mobile platform to collect mobile sensor data
+
 
 ### Note
 We have renamed following repositories.
@@ -24,12 +18,12 @@ We have renamed following repositories.
 * CerebralCortex - >  CerebralCortex-Kernel
 
 ### Releases
-* **2018.11.16** Cerebral Cortex Cloud Platform
+* **2018.03.18** Cerebral Cortex Cloud Platform
   - Grafana visualization support
   - Jupyter Notebook analysis platform
-  - [Cerebral Cortex 2.3.0](https://github.com/MD2Korg/CerebralCortex/tree/2.3.0)
+  - [Cerebral Cortex 3.0.0](https://github.com/MD2Korg/CerebralCortex-Kernel/releases)
   - File system based storage architecture
-  - Ability to collect data from [mCerebrum](https://md2k.org/mc2015) app
+  - Ability to collect data from [mCerebrum](https://md2k.org/mc2015) app (**Note:** mCerebrum is not compatiable for CerebralCortex 3.0.0 yet.)
 
 # Disclaimer
 This software is intended for informational and demonstration purposes only and is not designed to diagnose, treat, cure, prevent, or track disease or health states. No content provided in this software is intended to serve as a substitute for any kind of professional (e.g., medical) advice.
