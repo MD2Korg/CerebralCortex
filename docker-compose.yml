@@ -69,7 +69,7 @@ services:
 
 # Data Science Dashboard Interface
   jupyter:
-    image: md2korg/cerebralcortex-jupyter:2.4.0
+    image: md2korg/cerebralcortex-jupyter:latest
     container_name: cerebralcortex-jupyterhub
     ports:
       - 8000
@@ -93,7 +93,9 @@ services:
     ports:
       - "9092:9092"
     environment:
+      # use either HOSTNAME_COMMAND or KAFKA_ADVERTISED_HOST_NAME
       HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+      # KAFKA_ADVERTISED_HOST_NAME: YOUR-LOCAL-HOST-IP (not localhost or 127.0.0.1)
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CREATE_TOPICS: "filequeue:8:1"
