@@ -86,11 +86,24 @@ These steps are performed from the command line and do not need a graphical inte
   ```
   Please consult the [Docker](https://docker.com) site if you face any installation errors for step 1 and 2.
 
-
 3. Download or clone this CerebralCortex repository.
   ```bash
   git clone https://github.com/MD2KOrg/CerebralCortex
   cd CerebralCortex
+  ```
+  
+3. Update following configs in `docker-compose.yml`. Comment `HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"`,
+uncomment `KAFKA_ADVERTISED_HOST_NAME:`, and put your public ip address there.
+
+```
+environment:
+      # use either HOSTNAME_COMMAND or KAFKA_ADVERTISED_HOST_NAME
+      HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+      # KAFKA_ADVERTISED_HOST_NAME: YOUR-LOCAL-HOST-IP (not localhost or 127.0.0.1)
+```
+ 
+4. Run docker-compose
+  ```bash
   docker-compose up -d
   ```
 
