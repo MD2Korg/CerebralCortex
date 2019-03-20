@@ -87,7 +87,7 @@ services:
 
 #Cerebral Cortex backend
   kafka:
-    image: wurstmeister/kafka:2.11-2.0.0
+    image: wurstmeister/kafka:2.12-2.1.1
     container_name: cerebralcortex-kafka
     restart: always
     ports:
