@@ -29,7 +29,7 @@ We have renamed following repositories.
 This software is intended for informational and demonstration purposes only and is not designed to diagnose, treat, cure, prevent, or track disease or health states. No content provided in this software is intended to serve as a substitute for any kind of professional (e.g., medical) advice.
 
 # Installation Instructions
-The Cerebral Cortex platform can installed and tested on any of the three major platforms: Linux, Mac OS X, and Windows.  The following instructions will walk you through installing the dependencies necessary to run Cerebral Cortex.  The Docker images take approximately 8 minutes to download, build, and install on a 1000 Mbit/second internet connection. We are continually working on improving the speed with which everything downloads and installs.
+The Cerebral Cortex platform can be installed and tested on any of the three major platforms: Linux, Mac OS X, and Windows.  The following instructions will walk you through installing the dependencies necessary to run Cerebral Cortex.  The Docker images take approximately 8 minutes to download, build, and install on a 1000 Mbit/second internet connection. We are continually working on improving the speed with which everything downloads and installs.
 
 ## Linux: (Ubuntu 18.04)
 These steps are performed from the command line and do not need a graphical interface.
@@ -64,11 +64,11 @@ These steps are performed from the command line and do not need a graphical inte
   ```
   Please consult the [Docker](https://docker.com) site if you face any installation errors for step 1 and 2.
 
-3. Download or clone this CerebralCortex-Platform repository.
+3. Download or clone this CerebralCortex repository.
   ```bash
-  git clone https://github.com/MD2KOrg/CerebralCortex-Platform
-  cd CerebralCortex-Platform
-  docker-compose up
+  git clone https://github.com/MD2KOrg/CerebralCortex
+  cd CerebralCortex
+  docker-compose up -d
   ```
   In case you encounter an error relating to permissions, add your user to the docker group.
  `sudo usermod -aG docker $USER`
@@ -87,28 +87,28 @@ These steps are performed from the command line and do not need a graphical inte
   Please consult the [Docker](https://docker.com) site if you face any installation errors for step 1 and 2.
 
 
-3. Download or clone this CerebralCortex-Platform repository.
+3. Download or clone this CerebralCortex repository.
   ```bash
-  git clone https://github.com/MD2KOrg/CerebralCortex-Platform
-  cd CerebralCortex-Platform
-  docker-compose up
+  git clone https://github.com/MD2KOrg/CerebralCortex
+  cd CerebralCortex
+  docker-compose up -d
   ```
 
 ## Windows 10:
 
 1. [Install Docker](https://docs.docker.com/docker-for-windows/install/)
 
-2. Download the CerebralCortex-Platform repository.  
-    Download location: [https://github.com/MD2Korg/CerebralCortex-Platform/archive/master.zip](https://github.com/MD2Korg/CerebralCortex-Platform/archive/master.zip)
+2. Download the CerebralCortex repository.  
+    Download location: [https://github.com/MD2Korg/CerebralCortex/archive/master.zip](https://github.com/MD2Korg/CerebralCortex/archive/master.zip)
 
-3. Extract the `CerebralCortex-Platform-master.zip` file and open it in `Explorer`
+3. Extract the `CerebralCortex-master.zip` file and open it in `Explorer`
 
 4. Open `PowerShell` and run the following commands
   ```PowerShell
-  PS C:\Users\hnat> cd Downloads\CerebralCortex-Platform-master
-  PS C:\Users\hnat\Downloads\CerebralCortex-Platform-master>
+  PS C:\Users\hnat> cd Downloads\CerebralCortex-master
+  PS C:\Users\hnat\Downloads\CerebralCortex-master>
 
-  PS C:\Users\hnat\Downloads\CerebralCortex-Platform-master> docker-compose up
+  PS C:\Users\hnat\Downloads\CerebralCortex-master> docker-compose up
   ```
 
   Note: Approve the Docker's requests for accessing a shared drive

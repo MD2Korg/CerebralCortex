@@ -67,26 +67,3 @@ kafka:
   # ping__kafka: how often CC-kafka shall check for new messages (in seconds)
   ping_kafka: 5
   consumer_group_id: "md2k-data-ingestion"
-
-#########################################################################
-#                          SPARK CONFIGS                                #
-#########################################################################
-# Do not change if you do not know what you are doing
-# TODO
-#spark:
-#  host:
-#  enable_gui: True
-#  master:
-
-#########################################################################
-#                          Data Provenance Storage                      #
-#########################################################################
-provenance: none
-
-mprove:
-#  host: 127.0.0.1 # change if MySQL is installed remotely
-#  port: 8088 # Change if MySQL is not using default port
-#  username: 'sample' # Change
-#  pass: 'default' # Change
-#  namespace: 'http://mprov.md2k.org'
-#  graph_name: 'mProv-graph'
