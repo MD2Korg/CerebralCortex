@@ -35,7 +35,7 @@ services:
       - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-pass}
       - KAFKA_HOST=${KAFKA_HOST:-kafka}
     volumes:
-      - ./mount_points/apiserver:/data
+      - ./mount_points/apiserver/data:/data
       - ./cc_conf:/cc_conf
       - ./merebrum_config:/merebrum_config
 
@@ -79,9 +79,9 @@ services:
     volumes:
       - ./jupyter/conf:/srv/jupyterhub/conf
       - ./cc_conf:/home/md2k/cc_conf
-      - ./mount_points/cc_data:/cc_data
+      - ./mount_points/apiserver/data:/data
       - ./jupyter:/home/md2k/demo
-    command: sh -c "chown -R md2k /cc_data/ && jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py"
+    command: sh -c "chown -R md2k /data/ && jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py"
 
 
 
