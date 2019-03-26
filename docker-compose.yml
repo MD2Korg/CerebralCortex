@@ -128,3 +128,4 @@ services:
     volumes:
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
       - ./mount_points/mysql:/var/lib/mysql
+      - ./mysql/mysql.cnf:/etc/mysql/mysql.cnf
