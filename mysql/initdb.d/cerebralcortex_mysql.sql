@@ -3,12 +3,18 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 12, 2019 at 10:06 PM
+-- Generation Time: Mar 25, 2019 at 05:03 PM
 -- Server version: 5.7.25-0ubuntu0.18.04.2
 -- PHP Version: 7.0.33-5+ubuntu18.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `cerebralcortex`
@@ -26,6 +32,20 @@ DROP TABLE IF EXISTS `cc_cache`;
 CREATE TABLE `cc_cache` (
   `cache_key` varchar(255) NOT NULL,
   `cache_value` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `corrected_metadata`
+--
+
+DROP TABLE IF EXISTS `corrected_metadata`;
+CREATE TABLE `corrected_metadata` (
+  `row_id` int(3) NOT NULL,
+  `stream_name` varchar(255) NOT NULL,
+  `metadata` json NOT NULL,
+  `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -61,7 +81,8 @@ CREATE TABLE `ingestion_logs` (
   `file_path` varchar(255) NOT NULL,
   `fault_type` varchar(100) NOT NULL,
   `fault_description` text NOT NULL,
-  `success` tinyint(1) NOT NULL
+  `success` tinyint(1) NOT NULL,
+  `added_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -129,6 +150,13 @@ ALTER TABLE `cc_cache`
   ADD PRIMARY KEY (`cache_key`);
 
 --
+-- Indexes for table `corrected_metadata`
+--
+ALTER TABLE `corrected_metadata`
+  ADD PRIMARY KEY (`row_id`),
+  ADD UNIQUE KEY `no_repeat` (`stream_name`);
+
+--
 -- Indexes for table `data_replay`
 --
 ALTER TABLE `data_replay`
@@ -174,6 +202,11 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `corrected_metadata`
+--
+ALTER TABLE `corrected_metadata`
+  MODIFY `row_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=330;
+--
 -- AUTO_INCREMENT for table `data_replay`
 --
 ALTER TABLE `data_replay`
@@ -182,7 +215,7 @@ ALTER TABLE `data_replay`
 -- AUTO_INCREMENT for table `ingestion_logs`
 --
 ALTER TABLE `ingestion_logs`
-  MODIFY `row_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42510;
+  MODIFY `row_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `kafka_offsets`
 --
@@ -192,9 +225,12 @@ ALTER TABLE `kafka_offsets`
 -- AUTO_INCREMENT for table `stream`
 --
 ALTER TABLE `stream`
-  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

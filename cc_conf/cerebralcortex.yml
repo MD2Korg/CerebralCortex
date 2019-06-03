@@ -6,6 +6,7 @@ cc:
   throw_exception: False #if this is set to True then application will get exceptions
   auth_token_expire_time: 40000 #seconds
   auth_encryption_key: "md@k&#8"
+  log_files_path: "/data/"
 
 #########################################################################
 #                        NoSQL Storage                                  #
