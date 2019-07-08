@@ -19,8 +19,8 @@ filesystem:
 
 #hdfs:
 #  host: localhost
-#  port: 9001
-#  raw_files_dir: "cerebralcortex/cerebralcortex/"
+#  port: 9000
+#  raw_files_dir: "/cerebralcortex/"
 
 #########################################################################
 #                        OBJECT Storage                                 #

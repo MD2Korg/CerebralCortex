@@ -36,8 +36,8 @@ services:
       - KAFKA_HOST=${KAFKA_HOST:-kafka}
     volumes:
       - ./mount_points/apiserver/data:/data
+      - ./mount_points/apiserver_bucket:/cc_bucket
       - ./cc_conf:/cc_conf
-      - ./merebrum_config:/merebrum_config
 
 # Data vizualizations
   grafana:
