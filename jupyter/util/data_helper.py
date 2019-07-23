@@ -61,9 +61,9 @@ def gen_phone_battery_metadata(stream_name)->Metadata:
         Metadata: metadata of phone battery stream
     """
     stream_metadata = Metadata()
-    stream_metadata.set_name(stream_name).set_version(1).set_description("mobile phone battery sample data stream.") \
+    stream_metadata.set_name(stream_name).set_description("mobile phone battery sample data stream.") \
         .add_dataDescriptor(
-        DataDescriptor().set_name("level").set_type("float").set_attribute("description", "current battery charge")) \
+        DataDescriptor().set_name("level").set_attribute("description", "current battery charge")) \
         .add_module(
         ModuleMetadata().set_name("battery").set_version("1.2.4").set_attribute("attribute_key", "attribute_value").set_author(
             "test_user", "test_user@test_email.com"))
@@ -71,7 +71,7 @@ def gen_phone_battery_metadata(stream_name)->Metadata:
     return stream_metadata
 
 
-def gen_location_datastream(user_id, stream_name)->object:
+def gen_location_datastream(CC, user_id, stream_name)->object:
     """
     Create pyspark dataframe with some sample gps data (Memphis, TN, lat, long, alt coordinates)
 
@@ -106,7 +106,7 @@ def gen_location_datastream(user_id, stream_name)->object:
     df = sqlContext.createDataFrame(sample_data, column_name)
 
     stream_metadata = Metadata()
-    stream_metadata.set_name(stream_name).set_version(1).set_description("GPS sample data stream.") \
+    stream_metadata.set_name(stream_name).set_description("GPS sample data stream.") \
         .add_dataDescriptor(
         DataDescriptor().set_name("latitude").set_type("float").set_attribute("description", "gps latitude")) \
         .add_dataDescriptor(
@@ -120,11 +120,16 @@ def gen_location_datastream(user_id, stream_name)->object:
         .add_dataDescriptor(
         DataDescriptor().set_name("accuracy").set_type("float").set_attribute("description", "accuracy of gps location")) \
         .add_module(
-        ModuleMetadata().set_name("examples.util.data_helper.gen_location_data").set_version("0.0.1").set_attribute("attribute_key", "attribute_value").set_author(
+        ModuleMetadata().set_name("examples.util.data_helper.gen_location_data").set_attribute("attribute_key", "attribute_value").set_author(
             "test_user", "test_user@test_email.com"))
     stream_metadata.is_valid()
 
-    return DataStream(data=df, metadata=stream_metadata)
+    ds = DataStream(data=df, metadata=stream_metadata)
+    CC.save_stream(ds)
 
-
+def setup_sample_data(CC, user_id, stream_name):
+    data = gen_phone_battery_data(user_id=user_id)
+    metadata = gen_phone_battery_metadata(stream_name=stream_name)
+    ds = DataStream(data, metadata)
+    CC.save_stream(ds)
 
