@@ -37,7 +37,7 @@ def gen_phone_battery_data(user_id)->object:
         DataFrame: pyspark dataframe object with columns: ["timestamp", "battery_level", "version", "user"]
 
     """
-    column_name = ["timestamp", "battery_level", "version", "user"]
+    column_name = ["timestamp", "localtime", "battery_level", "version", "user"]
     sample_data = []
     timestamp = datetime(2019, 1, 9, 11, 34, 59)
     tmp = 1
