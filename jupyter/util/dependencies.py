@@ -1,6 +1,6 @@
 from cerebralcortex import Kernel
 from cerebralcortex.core.datatypes import DataStream
-from util.data_helper import setup_sample_data, gen_location_datastream
+from util.data_helper import setup_sample_data, gen_location_datastream, gen_phone_battery_metadata
 from util.sample_data import gen_stress_data
 import pandas as pd
 import json

@@ -37,7 +37,7 @@ def gen_phone_battery_data(user_id)->object:
         DataFrame: pyspark dataframe object with columns: ["timestamp", "battery_level", "version", "user"]
 
     """
-    column_name = ["timestamp", "localtime", "battery_level", "version", "user"]
+    column_name = ["timestamp", "localtime", "user" ,"version", "battery_level"]
     sample_data = []
     timestamp = datetime(2019, 1, 9, 11, 34, 59)
     tmp = 1
@@ -49,7 +49,8 @@ def gen_phone_battery_data(user_id)->object:
             sample = sample - 1
             tmp = 1
         timestamp = timestamp + timedelta(0, 1)
-        sample_data.append((timestamp, sample, 1, user_id))
+        localtime = timestamp - timedelta(hours=5)
+        sample_data.append((timestamp, localtime, user_id, 1, sample))
     df = sqlContext.createDataFrame(sample_data, column_name)
     return df
 
