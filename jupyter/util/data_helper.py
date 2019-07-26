@@ -30,7 +30,23 @@ from cerebralcortex.core.metadata_manager.stream.metadata import Metadata, DataD
 from cerebralcortex.core.util.spark_helper import get_or_create_sc
 
 
-def gen_phone_battery_data(user_id)->object:
+def gen_phone_battery_metadata(stream_name)->Metadata:
+    """
+    Create Metadata object with some sample metadata of phone battery data
+    Returns:
+        Metadata: metadata of phone battery stream
+    """
+    stream_metadata = Metadata()
+    stream_metadata.set_name(stream_name).set_description("mobile phone battery sample data stream.") \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("level").set_attribute("description", "current battery charge")) \
+        .add_module(
+        ModuleMetadata().set_name("battery").set_version("1.2.4").set_attribute("attribute_key", "attribute_value").set_author(
+            "Nasir Ali", "nasir.ali08@gmail.com"))
+    stream_metadata.is_valid()
+    return stream_metadata
+
+def gen_phone_battery_data(CC, user_id, stream_name)->object:
     """
     Create pyspark dataframe with some sample phone battery data
     Returns:
@@ -52,24 +68,10 @@ def gen_phone_battery_data(user_id)->object:
         localtime = timestamp - timedelta(hours=5)
         sample_data.append((timestamp, localtime, user_id, 1, sample))
     df = sqlContext.createDataFrame(sample_data, column_name)
-    return df
-
-
-def gen_phone_battery_metadata(stream_name)->Metadata:
-    """
-    Create Metadata object with some sample metadata of phone battery data
-    Returns:
-        Metadata: metadata of phone battery stream
-    """
-    stream_metadata = Metadata()
-    stream_metadata.set_name(stream_name).set_description("mobile phone battery sample data stream.") \
-        .add_dataDescriptor(
-        DataDescriptor().set_name("level").set_attribute("description", "current battery charge")) \
-        .add_module(
-        ModuleMetadata().set_name("battery").set_version("1.2.4").set_attribute("attribute_key", "attribute_value").set_author(
-            "test_user", "test_user@test_email.com"))
-    stream_metadata.is_valid()
-    return stream_metadata
+    metadata = gen_phone_battery_metadata(stream_name=stream_name)
+    ds = DataStream(df, metadata)
+    CC.save_stream(ds)
+    print("Phone battery data is generated successfully.")
 
 
 def gen_location_datastream(CC, user_id, stream_name)->object:
@@ -122,15 +124,78 @@ def gen_location_datastream(CC, user_id, stream_name)->object:
         DataDescriptor().set_name("accuracy").set_type("float").set_attribute("description", "accuracy of gps location")) \
         .add_module(
         ModuleMetadata().set_name("examples.util.data_helper.gen_location_data").set_attribute("attribute_key", "attribute_value").set_author(
-            "test_user", "test_user@test_email.com"))
+            "Nasir Ali", "nasir.ali08@gmail.com"))
     stream_metadata.is_valid()
 
     ds = DataStream(data=df, metadata=stream_metadata)
     CC.save_stream(ds)
 
-def setup_sample_data(CC, user_id, stream_name):
-    data = gen_phone_battery_data(user_id=user_id)
-    metadata = gen_phone_battery_metadata(stream_name=stream_name)
-    ds = DataStream(data, metadata)
-    CC.save_stream(ds)
+# def setup_sample_data(CC, user_id, stream_name):
+#     data = gen_phone_battery_data(user_id=user_id)
+#     metadata = gen_phone_battery_metadata(stream_name=stream_name)
+#     ds = DataStream(data, metadata)
+#     CC.save_stream(ds)
 
+def gen_stress_data(CC, stream_name, spark_df=False):
+    data = [[0.7, "road", "Driving", "Was Tailgated", "IN_VEHICLE"],
+            [0.3, "work", "Job", "Bored / Not enough to do", "STILL"],
+            [0.5, "home", "Health", "Physical inability", "STILL"],
+            [0.6, "road", "Driving", "Saw a police car", "IN_VEHICLE"],
+            [0.38, "work", "Job", "Technology barriers", "STILL"],
+            [0.2, "home", "Finance", "Missed payment", "UNKNOWN"],
+            [0.9, "work", "Finance", "Unexpected losses", "WALKING"],
+            [0.54, "road", "Driving", "Difficulty in navigating", "IN_VEHICLE"],
+            [0.79, "work", "Job", "Unpleasant conversation", "ON_FOOT"],
+            [0.28, "road", "Health", "My eating habits", "IN_VEHICLE"],
+            [0.47, "road", "Driving", "Indecision at a traffic intersection", "IN_VEHICLE"],
+            [0.67, "work", "Job", "Late arrival", "WALKING"],
+            ]
+
+
+    column_name = ['user','timestamp','localtime', 'version','start_time','end_time','density','location','stresser_main','stresser_sub','activity']
+    sample_data = []
+    timestamp = datetime(2019, 1, 9, 11, 34, 59)
+
+    for row in range(20, 1, -1):
+        if row>10:
+            user_id = "a1112de1-ca36-42fc-aabe-7ec45cd552c5"
+        else:
+            user_id = "b1117354-ce48-4325-b2e3-78b0cc932819"
+        timestamp = timestamp + timedelta(hours=random.choice([1,3,7,2,4,5]))
+        localtime = timestamp - timedelta(hours=5)
+        start_time = timestamp
+        end_time = timestamp + timedelta(minutes=random.choice([12,6,8,16,29,45,2,3,8]))
+        data_vals=random.choice(data)
+        sample_data.append([user_id,timestamp,localtime,1, start_time, end_time, data_vals[0],data_vals[1],data_vals[2],data_vals[3],data_vals[4]])
+    
+    stream_metadata = Metadata()
+    stream_metadata.set_name(stream_name).set_description("GPS sample data stream.") \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("start_time").set_type("datetime").set_attribute("description", "start time of a stress episode.")) \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("end_time").set_type("datetime").set_attribute("description", "end time of a stress episode.")) \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("density").set_type("float").set_attribute("description", "density of stress")) \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("location").set_type("string").set_attribute("description", "location where stress episode was captured.")) \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("stresser_main").set_type("string").set_attribute("description", "stressers' main category.")) \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("stresser_sub").set_type("string").set_attribute("description", "stressers' sub category.")) \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("activity").set_type("string").set_attribute("description", "physical activity name")) \
+        .add_module(
+        ModuleMetadata().set_name("examples.util.data_helper.gen_stress_data").set_attribute("attribute_key", "attribute_value").set_author(
+            "Nasir Ali", "nasir.ali08@gmail.com"))
+    stream_metadata.is_valid()
+    
+    if spark_df:
+        sqlContext = get_or_create_sc("sqlContext")
+        df = sqlContext.createDataFrame(sample_data, column_name)
+    else:
+        df = pd.DataFrame(sample_data,columns=column_name)
+
+    ds = DataStream(df, stream_metadata)
+    #return ds
+    CC.save_stream(ds)
+    print("Stress data is generated successfully.")
