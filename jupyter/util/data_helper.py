@@ -88,23 +88,28 @@ def gen_location_datastream(CC, user_id, stream_name)->object:
     """
     column_name = ["timestamp", "localtime", "user" ,"version" ,"latitude" ,"longitude" ,"altitude" ,"speed" ,"bearing" ,"accuracy"]
     sample_data = []
-    timestamp = datetime(2019, 1, 9, 11, 34, 59)
+    timestamp = datetime(2019, 9, 1, 11, 34, 59)
     sqlContext = get_or_create_sc("sqlContext")
-    lat = [35.1247391,35.1257391,35.1217391,35.1117391,35.1317391,35.1287391,35.5217391]
-    long = [-89.9750021,-89.9710021,-89.9800021,-89.9670021,-89.9790021,-89.9710021,-89.8700021]
-    alt = [83.0,84.0, 85.0, 86.0,87.0,88.0, 89.0]
-    for dp in range(500):
-        lat_val = random.choice(lat)
-        long_val = random.choice(long)
-        alt_val = random.choice(alt)
-        #ts_val = 15094)+(16272882+(dp*1000000))
-        speed_val = round(random.uniform(0.0,5.0),6)
-        bearing_val = round(random.uniform(0.0,350),6)
-        accuracy_val = round(random.uniform(10.0, 30.4),6)
-        #all_dps = ",".join([ts_val, lat_val, long_val, alt_val, speed_val, bearing_val, accuracy_val])
-        timestamp = timestamp + timedelta(minutes=1)
-        localtime = timestamp + timedelta(hours=5)
-        sample_data.append((timestamp, localtime, user_id, 1, lat_val, long_val, alt_val, speed_val, bearing_val, accuracy_val))
+
+    lower_left = [35.079678, -90.074136]
+    upper_right = [35.194771, -89.868766]
+    alt = [i for i in range(83,100)]
+    
+    for location in range(5):
+        lat  = random.uniform(lower_left[0],upper_right[0])
+        long = random.uniform(lower_left[1],upper_right[1])
+        for dp in range(150):
+            lat_val = random.gauss(lat,0.001)
+            long_val = random.gauss(long,0.001)
+            alt_val = random.choice(alt)
+
+            speed_val = round(random.uniform(0.0,5.0),6)
+            bearing_val = round(random.uniform(0.0,350),6)
+            accuracy_val = round(random.uniform(10.0, 30.4),6)
+
+            timestamp = timestamp + timedelta(minutes=1)
+            localtime = timestamp + timedelta(hours=5)
+            sample_data.append((timestamp, localtime, user_id, 1, lat_val, long_val, alt_val, speed_val, bearing_val, accuracy_val))
 
     df = sqlContext.createDataFrame(sample_data, column_name)
 
