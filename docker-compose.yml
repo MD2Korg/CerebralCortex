@@ -69,7 +69,7 @@ services:
 
 # Data Science Dashboard Interface
   jupyter:
-    image: md2korg/cerebralcortex-jupyter:latest
+    image: md2korg/cerebralcortex-jupyter:3.0.0
     container_name: cerebralcortex-jupyterhub
     ports:
       - 8000
