@@ -36,7 +36,7 @@ services:
       - KAFKA_HOST=${KAFKA_HOST:-kafka}
     volumes:
       - ./mount_points/apiserver/data:/data
-      - ./mount_points/apiserver_bucket:/cc_bucket
+      - ./mount_points/apiserver:/cc_bucket
       - ./cc_conf:/cc_conf
 
 # Data vizualizations
@@ -80,6 +80,7 @@ services:
       - ./jupyter/conf:/srv/jupyterhub/conf
       - ./cc_conf:/home/md2k/cc_conf
       - ./mount_points/apiserver/data:/data
+      - ./mount_points/apiserver:/cc_bucket
       - ./jupyter:/home/md2k/demo
     command: sh -c "chown -R md2k /data/ && jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py"
 
