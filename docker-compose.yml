@@ -77,11 +77,10 @@ services:
     environment:
       TINI_SUBREAPER: 'true'
     volumes:
-      - ./jupyter/conf:/srv/jupyterhub/conf
       - ./cc_conf:/home/md2k/cc_conf
       - ./mount_points/apiserver/data:/data
       - ./mount_points/apiserver:/cc_bucket
-      - ./jupyter:/home/md2k/demo
+      - ./jupyter_demo:/home/md2k/jupyter_demo
     command: sh -c "chown -R md2k /data/ && jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py"
 
 
