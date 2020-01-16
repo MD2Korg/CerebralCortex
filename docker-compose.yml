@@ -78,6 +78,7 @@ services:
       TINI_SUBREAPER: 'true'
     volumes:
       - ./cc_conf:/home/md2k/cc_conf
+      - ./jupyter/conf:/srv/jupyterhub/conf
       - ./mount_points/apiserver/data:/data
       - ./mount_points/apiserver:/cc_bucket
       - ./jupyter_demo:/home/md2k/jupyter_demo
