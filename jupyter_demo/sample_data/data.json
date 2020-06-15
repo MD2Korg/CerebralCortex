@@ -5,7 +5,7 @@
     {
       "type": "double",
       "name": "some_vals",
-      attributes
+      "attributes": {}
     }
   ],
   "modules": [
