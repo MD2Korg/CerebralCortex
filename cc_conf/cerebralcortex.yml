@@ -48,7 +48,7 @@ mysql:
 #########################################################################
 ###################### Visualization Data Storage #######################
 #########################################################################
-visualization_storage: none
+visualization_storage: influxdb
 
 influxdb:
   host: influxdb
@@ -58,6 +58,13 @@ influxdb:
   db_pass: ""
 
 #########################################################################
-############################### mProv Service ###########################
+########################### Messaging Service ###########################
 #########################################################################
-mprov: False
+messaging_service: none
+
+#kafka:
+#  host: kafka
+#  port: 9092
+#  # ping__kafka: how often CC-kafka shall check for new messages (in seconds)
+#  ping_kafka: 5
+#  consumer_group_id: "md2k-data-ingestion"
