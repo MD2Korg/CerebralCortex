@@ -67,20 +67,23 @@ services:
 
 # Data Science Dashboard Interface
   jupyter:
-    image: md2korg/cerebralcortex-jupyter:3.1.1
+    # image: md2korg/cerebralcortex-jupyter:3.1.1
+    build: ../CerebralCortex-Jupyter
     container_name: cerebralcortex-jupyterhub
     ports:
       - 8000
     restart: always
     environment:
-      TINI_SUBREAPER: 'true'
+      - NB_USER=md2k
+      - JUPYTER_ENABLE_LAB=yes
+      - RESTARTABLE=yes
     volumes:
       - ./cc_conf:/home/md2k/cc_conf
-      - ./jupyter/conf:/srv/jupyterhub/conf
+      - ./jupyter/conf:/etc/jupyter/
       - ./mount_points/apiserver/data:/data
       - ./mount_points/apiserver:/cc_bucket
       - ./jupyter_demo:/home/md2k/jupyter_demo
-    command: sh -c "chown -R md2k /data/ && jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py"
+    # command: sh -c "chown -R md2k /data/ && jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py"
 
   mysql:
     image: mysql:5.7
