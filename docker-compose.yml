@@ -78,8 +78,7 @@ services:
       - JUPYTER_ENABLE_LAB=yes
       - RESTARTABLE=yes
       - GRANT_SUDO="yes"
-    user:
-      "root"
+    user: root
     volumes:
       - ./cc_conf:/home/jovyan/cc_conf
       - ./jupyter/conf:/etc/jupyter/
