@@ -63,6 +63,6 @@ influxdb:
 mprov: none
 
 pennprov:
-  host:http://penn-provenance:8088
-  user:"demo"
-  password:"demo
+  host: http://penn-provenance:8088
+  user: demo
+  password: demo

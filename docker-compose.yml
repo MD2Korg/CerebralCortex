@@ -74,7 +74,7 @@ services:
       - 8000
     restart: always
     environment:
-      - NB_USER=md2k
+      - NB_USER=jovyan
       - JUPYTER_ENABLE_LAB=yes
       - RESTARTABLE=yes
       - GRANT_SUDO="yes"
