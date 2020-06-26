@@ -21,7 +21,7 @@ services:
       - jupyter
 
   apiserver:
-    image: md2korg/cerebralcortex-apiserver:3.2.0
+    image: md2korg/cerebralcortex-apiserver:3.2.1
     container_name: cerebralcortex-apiserver
     restart: always
     expose:
@@ -67,8 +67,8 @@ services:
 
 # Data Science Dashboard Interface
   jupyter:
-    # image: md2korg/cerebralcortex-jupyter:3.1.1
-    build: ../CerebralCortex-Jupyter
+    image: md2korg/cerebralcortex-jupyter:3.2.1
+    #build: ../CerebralCortex-Jupyter
     container_name: cerebralcortex-jupyterhub
     ports:
       - 8000
