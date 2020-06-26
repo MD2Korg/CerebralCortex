@@ -18,3 +18,9 @@ import ipywidgets as widgets
 
 init_notebook_mode(connected=True)
 pd.set_option('display.max_rows',5)
+
+USER_ID = "00000000-afb8-476e-9872-6472b4e66b68"
+
+import os
+os.environ["MPROV_USER"] = "neo4j"
+os.environ["MPROV_PASSWORD"] = "habitat1"

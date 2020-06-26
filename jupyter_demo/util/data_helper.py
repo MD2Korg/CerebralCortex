@@ -25,6 +25,7 @@
 
 from datetime import datetime, timedelta
 import random
+import pandas as pd
 from cerebralcortex.core.datatypes import DataStream
 from cerebralcortex.core.metadata_manager.stream.metadata import Metadata, DataDescriptor, ModuleMetadata
 from cerebralcortex.core.util.spark_helper import get_or_create_sc
@@ -74,7 +75,7 @@ def gen_phone_battery_data(CC, user_id, stream_name)->object:
     print("Phone battery data is generated successfully.")
 
 
-def gen_location_datastream(CC, user_id, stream_name)->object:
+def gen_location_datastream(user_id, stream_name)->object:
     """
     Create pyspark dataframe with some sample gps data (Memphis, TN, lat, long, alt coordinates)
 
@@ -133,7 +134,7 @@ def gen_location_datastream(CC, user_id, stream_name)->object:
     stream_metadata.is_valid()
 
     ds = DataStream(data=df, metadata=stream_metadata)
-    CC.save_stream(ds)
+    return ds
 
 # def setup_sample_data(CC, user_id, stream_name):
 #     data = gen_phone_battery_data(user_id=user_id)
@@ -141,7 +142,7 @@ def gen_location_datastream(CC, user_id, stream_name)->object:
 #     ds = DataStream(data, metadata)
 #     CC.save_stream(ds)
 
-def gen_stress_data(CC, stream_name, spark_df=False):
+def gen_stress_data(stream_name, spark_df=False):
     data = [[0.7, "road", "Driving", "Was Tailgated", "IN_VEHICLE"],
             [0.3, "work", "Job", "Bored / Not enough to do", "STILL"],
             [0.5, "home", "Health", "Physical inability", "STILL"],
@@ -201,6 +202,4 @@ def gen_stress_data(CC, stream_name, spark_df=False):
         df = pd.DataFrame(sample_data,columns=column_name)
 
     ds = DataStream(df, stream_metadata)
-    #return ds
-    CC.save_stream(ds)
-    print("Stress data is generated successfully.")
+    return ds

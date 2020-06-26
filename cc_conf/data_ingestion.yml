@@ -9,6 +9,14 @@ data_ingestion:
   # ingest data in nosql storage store?
   nosql_in: True
 
+  # if set to "online" then no data would be stored on local hard-drive. All data would be processed by API-Server
+  # and stored in storage type/location defined in cerebralcortex.yml
+  # acceptable parameters: offline OR online
+  ingestion_type: "offline"
+
+  # if ingestion_type is set to "offline" then please specify hard-drive path where all the raw incoming data should be stored
+  raw_data_path: ""
+
 #########################################################################################
 # black listed streams' list. Black listed streams will not be ingested in NoSQL storage
 #########################################################################################

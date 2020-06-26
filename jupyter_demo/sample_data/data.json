@@ -4,7 +4,8 @@
   "data_descriptor": [
     {
       "type": "double",
-      "name": "some_vals"
+      "name": "some_vals",
+      "attributes": {}
     }
   ],
   "modules": [

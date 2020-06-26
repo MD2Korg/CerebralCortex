@@ -21,22 +21,20 @@ services:
       - jupyter
 
   apiserver:
-    image: md2korg/cerebralcortex-apiserver:3.0.0
+    image: md2korg/cerebralcortex-apiserver:3.2.1
     container_name: cerebralcortex-apiserver
     restart: always
     expose:
       - 80
     depends_on:
       - mysql
-      - kafka
     environment:
       - MYSQL_HOST=${MYSQL:-mysql}
       - MYSQL_DB_USER=${MYSQL_ROOT_USER:-root}
       - MYSQL_DB_PASS=${MYSQL_ROOT_PASSWORD:-pass}
-      - KAFKA_HOST=${KAFKA_HOST:-kafka}
     volumes:
       - ./mount_points/apiserver/data:/data
-      - ./mount_points/apiserver_bucket:/cc_bucket
+      - ./mount_points/apiserver:/cc_bucket
       - ./cc_conf:/cc_conf
 
 # Data vizualizations
@@ -69,48 +67,25 @@ services:
 
 # Data Science Dashboard Interface
   jupyter:
-    image: md2korg/cerebralcortex-jupyter:latest
+    image: md2korg/cerebralcortex-jupyter:3.2.1
+    #build: ../CerebralCortex-Jupyter
     container_name: cerebralcortex-jupyterhub
     ports:
       - 8000
     restart: always
     environment:
-      TINI_SUBREAPER: 'true'
+      - NB_USER=jovyan
+      - JUPYTER_ENABLE_LAB=yes
+      - RESTARTABLE=yes
+      - GRANT_SUDO="yes"
+    user: root
     volumes:
-      - ./jupyter/conf:/srv/jupyterhub/conf
-      - ./cc_conf:/home/md2k/cc_conf
+      - ./cc_conf:/home/jovyan/cc_conf
+      - ./jupyter/conf:/etc/jupyter/
       - ./mount_points/apiserver/data:/data
-      - ./jupyter:/home/md2k/demo
-    command: sh -c "chown -R md2k /data/ && jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py"
-
-
-
-#Cerebral Cortex backend
-  kafka:
-    image: wurstmeister/kafka:2.12-2.1.1
-    container_name: cerebralcortex-kafka
-    restart: always
-    ports:
-      - "9092:9092"
-    environment:
-      # use either HOSTNAME_COMMAND or KAFKA_ADVERTISED_HOST_NAME
-      HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
-      # KAFKA_ADVERTISED_HOST_NAME: YOUR-LOCAL-HOST-IP (not localhost or 127.0.0.1)
-      KAFKA_ADVERTISED_PORT: 9092
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "filequeue:8:1"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./mount_points/kafka:/kafka
-    depends_on:
-      - zookeeper
-
-  zookeeper:
-    image: wurstmeister/zookeeper
-    container_name: cerebralcortex-zookeeper
-    restart: always
-    ports:
-      - "2181:2181"
+      - ./mount_points/apiserver:/cc_bucket
+      - ./jupyter_demo:/home/jovyan/jupyter_demo
+    # command: sh -c "chown -R md2k /data/ && jupyterhub --no-ssl --config /srv/jupyterhub/conf/jupyterhub_config.py"
 
   mysql:
     image: mysql:5.7

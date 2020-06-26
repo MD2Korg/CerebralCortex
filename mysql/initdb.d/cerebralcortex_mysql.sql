@@ -33,24 +33,6 @@ CREATE TABLE `corrected_metadata` (
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
---
--- Table structure for table `data_replay`
---
-
-DROP TABLE IF EXISTS `data_replay`;
-CREATE TABLE `data_replay` (
-  `id` int(20) NOT NULL,
-  `owner_id` varchar(40) NOT NULL,
-  `stream_id` varchar(256) NOT NULL,
-  `stream_name` varchar(255) NOT NULL,
-  `day` varchar(12) NOT NULL,
-  `files_list` json NOT NULL,
-  `dir_size` int(10) NOT NULL,
-  `metadata` json NOT NULL,
-  `processed` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 -- --------------------------------------------------------
 
 --
@@ -62,6 +44,8 @@ CREATE TABLE `ingestion_logs` (
   `row_id` int(4) NOT NULL,
   `user_id` varchar(40) NOT NULL,
   `stream_name` varchar(255) NOT NULL,
+  `metadata` json NOT NULL,
+  `platform_metadata` json NOT NULL,
   `file_path` varchar(255) NOT NULL,
   `fault_type` varchar(100) NOT NULL,
   `fault_description` text NOT NULL,
@@ -113,14 +97,15 @@ CREATE TABLE `user` (
   `user_id` varchar(40) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
+  `study_name` varchar(250) NOT NULL,
   `token` text,
   `token_issued` datetime DEFAULT CURRENT_TIMESTAMP,
   `token_expiry` datetime DEFAULT CURRENT_TIMESTAMP,
   `user_role` varchar(255) DEFAULT NULL,
   `user_metadata` json DEFAULT NULL,
-  `user_settings` json DEFAULT NULL,
+  `user_settings` json NOT NULL,
   `active` tinyint(1) DEFAULT '0',
-  `confirmed_at` datetime DEFAULT CURRENT_TIMESTAMP
+  `confirmed_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -141,14 +126,6 @@ ALTER TABLE `corrected_metadata`
   ADD UNIQUE KEY `no_repeat` (`stream_name`);
 
 --
--- Indexes for table `data_replay`
---
-ALTER TABLE `data_replay`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `owner_id` (`owner_id`,`stream_id`,`day`),
-  ADD KEY `stream_name` (`stream_name`);
-
---
 -- Indexes for table `ingestion_logs`
 --
 ALTER TABLE `ingestion_logs`
@@ -157,7 +134,8 @@ ALTER TABLE `ingestion_logs`
   ADD KEY `user_id` (`user_id`),
   ADD KEY `stream_name` (`stream_name`),
   ADD KEY `file_path` (`file_path`),
-  ADD KEY `fault_type` (`fault_type`);
+  ADD KEY `fault_type` (`fault_type`),
+  ADD KEY `success` (`success`);
 
 --
 -- Indexes for table `kafka_offsets`
@@ -171,7 +149,8 @@ ALTER TABLE `kafka_offsets`
 -- Indexes for table `stream`
 --
 ALTER TABLE `stream`
-  ADD PRIMARY KEY (`row_id`);
+  ADD PRIMARY KEY (`row_id`),
+  ADD UNIQUE KEY `metadata_hash` (`metadata_hash`);
 
 --
 -- Indexes for table `user`
@@ -189,17 +168,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `corrected_metadata`
 --
 ALTER TABLE `corrected_metadata`
-  MODIFY `row_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=330;
---
--- AUTO_INCREMENT for table `data_replay`
---
-ALTER TABLE `data_replay`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `row_id` int(3) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `ingestion_logs`
 --
 ALTER TABLE `ingestion_logs`
-  MODIFY `row_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `row_id` int(4) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `kafka_offsets`
 --
@@ -209,9 +183,9 @@ ALTER TABLE `kafka_offsets`
 -- AUTO_INCREMENT for table `stream`
 --
 ALTER TABLE `stream`
-  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `row_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
