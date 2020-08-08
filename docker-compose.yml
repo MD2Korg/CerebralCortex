@@ -21,7 +21,7 @@ services:
       - jupyter
 
   apiserver:
-    image: md2korg/cerebralcortex-apiserver:3.2.1
+    image: md2korg/cerebralcortex-apiserver:3.3.0
     container_name: cerebralcortex-apiserver
     restart: always
     expose:
@@ -67,7 +67,7 @@ services:
 
 # Data Science Dashboard Interface
   jupyter:
-    image: md2korg/cerebralcortex-jupyter:3.2.1
+    image: md2korg/cerebralcortex-jupyter:3.3.0
     #build: ../CerebralCortex-Jupyter
     container_name: cerebralcortex-jupyterhub
     ports:
@@ -101,6 +101,6 @@ services:
       - MYSQL_USER=${MYSQL_USER:-cerebralcortex}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-cerebralcortex_pass}
     volumes:
-      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      #- ./mysql/initdb.d:/docker-entrypoint-initdb.d
       - ./mount_points/mysql:/var/lib/mysql
       - ./mysql/mysql.cnf:/etc/mysql/mysql.cnf
