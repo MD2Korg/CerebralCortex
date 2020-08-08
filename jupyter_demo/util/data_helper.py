@@ -38,7 +38,7 @@ def gen_phone_battery_metadata(stream_name)->Metadata:
         Metadata: metadata of phone battery stream
     """
     stream_metadata = Metadata()
-    stream_metadata.set_name(stream_name).set_description("mobile phone battery sample data stream.") \
+    stream_metadata.set_study_name("default").set_name(stream_name).set_description("mobile phone battery sample data stream.") \
         .add_dataDescriptor(
         DataDescriptor().set_name("level").set_attribute("description", "current battery charge")) \
         .add_module(
@@ -72,7 +72,6 @@ def gen_phone_battery_data(CC, user_id, stream_name)->object:
     metadata = gen_phone_battery_metadata(stream_name=stream_name)
     ds = DataStream(df, metadata)
     CC.save_stream(ds)
-    print("Phone battery data is generated successfully.")
 
 
 def gen_location_datastream(user_id, stream_name)->object:
@@ -115,7 +114,15 @@ def gen_location_datastream(user_id, stream_name)->object:
     df = sqlContext.createDataFrame(sample_data, column_name)
 
     stream_metadata = Metadata()
-    stream_metadata.set_name(stream_name).set_description("GPS sample data stream.") \
+    stream_metadata.set_study_name("default").set_name(stream_name).set_description("GPS sample data stream.") \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("timestamp").set_type("datetime").set_attribute("description", "UTC timestamp of data point collection.")) \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("localtime").set_type("datetime").set_attribute("description", "local timestamp of data point collection.")) \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("user").set_type("string").set_attribute("description", "user id")) \
+        .add_dataDescriptor(
+        DataDescriptor().set_name("version").set_type("int").set_attribute("description", "version of the data")) \
         .add_dataDescriptor(
         DataDescriptor().set_name("latitude").set_type("float").set_attribute("description", "gps latitude")) \
         .add_dataDescriptor(
@@ -164,7 +171,7 @@ def gen_stress_data(stream_name, spark_df=False):
 
     for row in range(20, 1, -1):
         if row>10:
-            user_id = "a1112de1-ca36-42fc-aabe-7ec45cd552c5"
+            user_id = "00000000-afb8-476e-9872-6472b4e66b68"
         else:
             user_id = "b1117354-ce48-4325-b2e3-78b0cc932819"
         timestamp = timestamp + timedelta(hours=random.choice([1,3,7,2,4,5]))
@@ -175,7 +182,7 @@ def gen_stress_data(stream_name, spark_df=False):
         sample_data.append([user_id,timestamp,localtime,1, start_time, end_time, data_vals[0],data_vals[1],data_vals[2],data_vals[3],data_vals[4]])
     
     stream_metadata = Metadata()
-    stream_metadata.set_name(stream_name).set_description("GPS sample data stream.") \
+    stream_metadata.set_study_name("default").set_name(stream_name).set_description("GPS sample data stream.") \
         .add_dataDescriptor(
         DataDescriptor().set_name("start_time").set_type("datetime").set_attribute("description", "start time of a stress episode.")) \
         .add_dataDescriptor(
